@@ -1,19 +1,33 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import NotFound from "./pages/NotFound";
-import MainLayout from "./layouts/MainLayout";
+import { useEffect, useState } from "react";
+import { getHealth } from "./services/api";
+import "./App.css";
 
 function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<MainLayout />}>
-          <Route path="/" element={<Home />} />
-        </Route>
+  const [health, setHealth] = useState("Kontrol ediliyor...");
+  const [error, setError] = useState("");
 
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+  useEffect(() => {
+    getHealth()
+      .then((data) => {
+        setHealth(data);
+      })
+      .catch((err) => {
+        setError(err.message);
+      });
+  }, []);
+
+  return (
+    <div>
+      <h1>Staj Projesi</h1>
+
+      <h2>Backend Durumu</h2>
+
+      {error ? (
+        <p>❌ {error}</p>
+      ) : (
+        <p>✅ {health}</p>
+      )}
+    </div>
   );
 }
 
