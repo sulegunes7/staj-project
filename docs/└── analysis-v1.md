@@ -531,16 +531,16 @@ Beklenmeyen sunucu hatası
 18. Durum
 Bu doküman, Full Stack geliştirme yönü için ilk üç gün kapsamında hazırlanan ön analiz çalışmasıdır.
 
-1. Gün Çıktıları
+***1. Gün Çıktıları***
 Uçtan uca demo senaryosu
 Sistem bileşenleri
-2. Gün Çıktıları
+***2. Gün Çıktıları***
 Veri ihtiyaçları
 API ihtiyaçları
 Arayüz ihtiyaçları
 Ön kapsam sınırları
 Açık soru listesi
-3. Gün Çıktıları
+***3. Gün Çıktıları***
 Kullanıcı hikâyeleri
 Kabul kriterleri
 Ana iş akışları
@@ -548,3 +548,24 @@ Ekran haritası
 Veri/API/arayüz eşleştirmesi
 Temel iş kuralları
 Hata ve negatif durumlar
+> 4. Gün: Projenin Full Stack geliştirme yönü için teknik kararlar değerlendirildi. Frontend tarafında React, routing için React Router, backend tarafında Java/Spring Boot ve ilişkisel veritabanı olarak PostgreSQL tercih edildi. Frontend ile backend arasındaki iletişimin REST API üzerinden gerçekleştirilmesine karar verildi. Repository yapısı frontend, backend ve dokümantasyon klasörleri ayrılacak şekilde planlandı. React konusunda mevcut deneyim bulunmadığı için component, state management, routing ve API entegrasyonu konularını kapsayan bir öğrenme planı oluşturuldu.
+5. Gün
+Proje iskeletini oluşturuldu.
+Spring Boot backend oluşturuldu.
+Katmanlı yapı kuruldu: controller, service, repository, model.
+PostgreSQL bağlantısı yapıldı.
+React + Vite frontend iskeleti oluşturuldu.
+Routing/layout ve klasör yapısı oluşturuldu.
+Backend ve frontend aynı repository içinde konumlandırıldı.
+İlk Git commit'i oluşturuldu ve GitHub'a gönderildi.
+6. Gün
+/api/health endpoint'i oluşturuldu ve test edildi.
+GlobalExceptionHandler eklendi.
+Swagger/OpenAPI entegrasyonu yapıldı.
+Frontend API client oluşturuldu.
+React ekranından backend'e istek atıldı.
+Backend is running mesajı frontend'de gösterildi.
+PostgreSQL → Backend → API → Frontend akışı doğrulandı.
+CORS yapılandırması yapıldı.
+npm run build ile production build başarıyla doğrulandı.
+Son geliştirmeler commit edilip GitHub'a push edildi.
