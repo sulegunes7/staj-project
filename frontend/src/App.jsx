@@ -1,32 +1,40 @@
-import { useEffect, useState } from "react";
-import { getHealth } from "./services/api";
+import { useState } from "react";
+import Home from "./pages/Home";
+import WeeklyReports from "./pages/WeeklyReports";
 import "./App.css";
 
 function App() {
-  const [health, setHealth] = useState("Kontrol ediliyor...");
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    getHealth()
-      .then((data) => {
-        setHealth(data);
-      })
-      .catch((err) => {
-        setError(err.message);
-      });
-  }, []);
+  const [page, setPage] = useState("projects");
 
   return (
-    <div>
-      <h1>Staj Projesi</h1>
+    <div className="app">
+      <nav className="navbar">
+        <div className="navbar-inner">
+          <h2>Staj Takip Sistemi</h2>
 
-      <h2>Backend Durumu</h2>
+          <div className="nav-buttons">
+            <button
+              className={page === "projects" ? "active" : ""}
+              onClick={() => setPage("projects")}
+            >
+              Projeler
+            </button>
 
-      {error ? (
-        <p>❌ {error}</p>
-      ) : (
-        <p>✅ {health}</p>
-      )}
+            <button
+              className={page === "reports" ? "active" : ""}
+              onClick={() => setPage("reports")}
+            >
+              Haftalık Raporlar
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <main className="container">
+        {page === "projects" && <Home />}
+
+        {page === "reports" && <WeeklyReports />}
+      </main>
     </div>
   );
 }

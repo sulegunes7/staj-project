@@ -2,3 +2,661 @@
   width: 100%;
   min-height: 100vh;
 }
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f6f8;
+  color: #1f2937;
+}
+
+/* Ana uygulama */
+
+.app {
+  min-height: 100vh;
+}
+
+/* Üst menü */
+
+.navbar {
+  width: 100%;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.navbar-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 18px 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #111827;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-buttons button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+
+  background: transparent;
+  color: #374151;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.nav-buttons button:hover {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.nav-buttons button.active {
+  background: #2563eb;
+  color: white;
+}
+
+/* Sayfa */
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+/* Başlıklar */
+
+h1 {
+  margin: 0 0 30px;
+  font-size: 32px;
+  color: #111827;
+}
+
+h2 {
+  margin: 0 0 20px;
+  font-size: 22px;
+  color: #1f2937;
+}
+
+/* Form */
+
+form {
+  width: 100%;
+  max-width: 700px;
+
+  background: white;
+  padding: 28px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+  margin-bottom: 35px;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: 6px;
+
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+input,
+textarea {
+  width: 100%;
+
+  padding: 12px 14px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+
+  outline: none;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* Genel buton */
+
+button {
+  border: none;
+  border-radius: 8px;
+
+  padding: 10px 16px;
+
+  background: #2563eb;
+  color: white;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* İptal butonu */
+
+form button[type="button"] {
+  margin-left: 10px;
+  background: #6b7280;
+}
+
+form button[type="button"]:hover {
+  background: #4b5563;
+}
+
+/* Mesajlar */
+
+p {
+  line-height: 1.6;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  margin: 35px 0;
+}
+
+/* Proje / rapor listesi */
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  background: white;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  padding: 22px;
+  margin-bottom: 16px;
+
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+}
+
+li strong {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 18px;
+  color: #111827;
+}
+
+li p {
+  margin: 6px 0;
+  color: #6b7280;
+}
+
+li button {
+  margin-top: 12px;
+}
+
+/* Mobil */
+
+@media (max-width: 700px) {
+  .navbar-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .container {
+    padding: 25px 16px;
+  }
+
+  form {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 27px;
+  }
+}
+.home-page {
+  width: 100%;
+}
+
+.page-header {
+  margin-bottom: 30px;
+}
+
+.page-subtitle {
+  margin-top: -20px;
+  color: #6b7280;
+}
+
+.form-section {
+  margin-bottom: 35px;
+}
+
+.form-section form {
+  max-width: 100%;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.secondary-button {
+  background: #6b7280;
+}
+
+.secondary-button:hover {
+  background: #4b5563;
+}
+
+.message {
+  padding: 14px 18px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+  font-weight: 500;
+}
+
+.error-message {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+}
+
+.success-message {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #15803d;
+}
+
+.projects-section {
+  margin-top: 10px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-header h2 {
+  margin-bottom: 5px;
+}
+
+.section-header p {
+  margin: 0;
+  color: #6b7280;
+}
+
+.project-count {
+  padding: 6px 12px;
+  background: #eff6ff;
+  color: #2563eb;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.project-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 22px;
+
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.project-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.project-number {
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.project-status {
+  padding: 5px 10px;
+  border-radius: 20px;
+  background: #ecfdf5;
+  color: #15803d;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.project-card h3 {
+  margin: 0 0 10px;
+  font-size: 19px;
+  color: #111827;
+}
+
+.project-card p {
+  min-height: 48px;
+  margin: 0;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.project-card-footer {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.project-card-footer button {
+  width: 100%;
+}
+
+.empty-state {
+  background: white;
+  border: 1px dashed #d1d5db;
+  border-radius: 14px;
+  padding: 45px 20px;
+  text-align: center;
+}
+
+.empty-state p {
+  color: #6b7280;
+}
+
+.empty-icon {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.empty-state h3 {
+  margin: 0 0 8px;
+}
+
+@media (max-width: 700px) {
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-header {
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+}
+/* =========================
+   HAFTALIK RAPORLAR
+   ========================= */
+
+.reports-page {
+  width: 100%;
+}
+
+.page-header {
+  margin-bottom: 30px;
+}
+
+.page-header h1 {
+  margin-bottom: 8px;
+}
+
+.page-header p {
+  margin: 0;
+  color: #6b7280;
+}
+
+.form-card {
+  max-width: 700px;
+  background: white;
+  padding: 28px;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 25px;
+}
+
+.form-card h2 {
+  margin-bottom: 24px;
+}
+
+.form-card form {
+  max-width: none;
+  padding: 0;
+  margin: 0;
+  border: none;
+  box-shadow: none;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 7px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.secondary-button {
+  background: #6b7280;
+}
+
+.secondary-button:hover {
+  background: #4b5563;
+}
+
+.message {
+  max-width: 700px;
+  padding: 13px 16px;
+  border-radius: 9px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.error-message {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+}
+
+.success-message {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #15803d;
+}
+
+.reports-section {
+  margin-top: 35px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-header h2 {
+  margin-bottom: 5px;
+}
+
+.section-header p {
+  margin: 0;
+  color: #6b7280;
+}
+
+.report-count {
+  padding: 7px 12px;
+  border-radius: 20px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.reports-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.report-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.report-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 18px rgba(0, 0, 0, 0.08);
+}
+
+.report-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.report-week {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.report-project {
+  padding: 6px 10px;
+  border-radius: 20px;
+  background: #f3f4f6;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.report-content {
+  min-height: 75px;
+  margin: 0 0 18px;
+  color: #4b5563;
+  line-height: 1.7;
+}
+
+.edit-button {
+  width: 100%;
+}
+
+.empty-state {
+  background: white;
+  border: 1px dashed #d1d5db;
+  border-radius: 14px;
+  padding: 35px;
+  text-align: center;
+}
+
+.empty-state h3 {
+  margin-top: 0;
+  color: #374151;
+}
+
+.empty-state p {
+  color: #6b7280;
+}
+
+/* Mobil */
+@media (max-width: 700px) {
+  .reports-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-header {
+    align-items: flex-start;
+    gap: 15px;
+    flex-direction: column;
+  }
+
+  .form-card {
+    padding: 20px;
+  }
+
+  .report-card-top {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
