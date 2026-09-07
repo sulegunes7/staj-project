@@ -3,6 +3,7 @@ import {
   getWeeklyReports,
   createWeeklyReport,
   updateWeeklyReport,
+  deleteWeeklyReport,
 } from "../services/api";
 
 function WeeklyReports() {
@@ -28,6 +29,7 @@ function WeeklyReports() {
       const data = await getWeeklyReports();
       setReports(data);
     } catch (err) {
+      console.error("Raporlar yüklenirken hata:", err);
       setError("Haftalık raporlar yüklenemedi.");
     } finally {
       setLoading(false);
@@ -101,6 +103,8 @@ function WeeklyReports() {
       resetForm();
       await loadReports();
     } catch (err) {
+      console.error("Rapor kaydedilirken hata:", err);
+
       setError(
         editingId !== null
           ? "Rapor güncellenemedi."
@@ -108,6 +112,34 @@ function WeeklyReports() {
       );
     } finally {
       setSaving(false);
+    }
+  }
+
+  async function handleDelete(report) {
+    const confirmed = window.confirm(
+      `"${report.week}" raporunu silmek istediğinize emin misiniz?`
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      setError("");
+      setSuccess("");
+
+      await deleteWeeklyReport(report.id);
+
+      setSuccess("Rapor başarıyla silindi.");
+
+      if (editingId === report.id) {
+        resetForm();
+      }
+
+      await loadReports();
+    } catch (err) {
+      console.error("Rapor silinirken hata:", err);
+      setError("Rapor silinemedi.");
     }
   }
 
@@ -216,14 +248,20 @@ function WeeklyReports() {
         {!loading && reports.length === 0 && !error && (
           <div className="empty-state">
             <h3>Henüz rapor bulunmuyor</h3>
-            <p>İlk haftalık raporunu yukarıdaki formdan oluşturabilirsin.</p>
+            <p>
+              İlk haftalık raporunu yukarıdaki formdan
+              oluşturabilirsin.
+            </p>
           </div>
         )}
 
         {!loading && reports.length > 0 && (
           <div className="reports-grid">
             {reports.map((report) => (
-              <article className="report-card" key={report.id}>
+              <article
+                className="report-card"
+                key={report.id}
+              >
                 <div className="report-card-top">
                   <span className="report-week">
                     {report.week}
@@ -238,12 +276,23 @@ function WeeklyReports() {
                   {report.content}
                 </p>
 
-                <button
-                  onClick={() => startEditing(report)}
-                  className="edit-button"
-                >
-                  Düzenle
-                </button>
+                <div className="report-card-actions">
+                  <button
+                    type="button"
+                    onClick={() => startEditing(report)}
+                    className="edit-button"
+                  >
+                    Düzenle
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(report)}
+                    className="delete-button"
+                  >
+                    Sil
+                  </button>
+                </div>
               </article>
             ))}
           </div>

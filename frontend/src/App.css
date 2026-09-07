@@ -254,6 +254,7 @@ li button {
     font-size: 27px;
   }
 }
+
 .home-page {
   width: 100%;
 }
@@ -453,6 +454,7 @@ li button {
     width: 100%;
   }
 }
+
 /* =========================
    HAFTALIK RAPORLAR
    ========================= */
@@ -640,6 +642,7 @@ li button {
 }
 
 /* Mobil */
+
 @media (max-width: 700px) {
   .reports-grid {
     grid-template-columns: 1fr;
@@ -659,4 +662,49 @@ li button {
     align-items: flex-start;
     flex-direction: column;
   }
+}
+
+/* Rapor kartı butonları */
+
+.report-card-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.report-card-actions button {
+  flex: 1;
+  width: auto;
+}
+
+.report-card-actions .edit-button {
+  background: #2563eb;
+}
+
+.report-card-actions .edit-button:hover {
+  background: #1d4ed8;
+}
+
+.report-card-actions .delete-button {
+  background: #dc2626;
+}
+
+.report-card-actions .delete-button:hover {
+  background: #b91c1c;
+}
+.report-card-actions .edit-button {
+  background: #2563eb !important;
+  color: white;
+}
+
+.report-card-actions .edit-button:hover {
+  background: #1d4ed8 !important;
+}
+
+.report-card-actions .delete-button {
+  background: #dc2626 !important;
+  color: white;
+}
+
+.report-card-actions .delete-button:hover {
+  background: #b91c1c !important;
 }

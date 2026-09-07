@@ -97,17 +97,58 @@ export async function createWeeklyReport(report) {
 
 // Haftalık raporu güncelle
 export async function updateWeeklyReport(id, report) {
-  const response = await fetch(`${API_URL}/api/weekly-reports/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(report),
-  });
+  const response = await fetch(
+    `${API_URL}/api/weekly-reports/${id}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(report),
+    }
+  );
 
   if (!response.ok) {
-    throw new Error("Haftalık rapor güncellenemedi");
+    const errorText = await response.text();
+
+    console.error(
+      "PUT Weekly Report Hatası:",
+      response.status,
+      errorText
+    );
+
+    throw new Error(
+      `Rapor güncellenemedi. HTTP ${response.status}`
+    );
   }
 
   return response.json();
+}
+export async function deleteProject(id) {
+  const response = await fetch(
+    `${API_URL}/api/projects/${id}`,
+    {
+      method: "DELETE",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Proje silinemedi.");
+  }
+
+  return true;
+}
+export async function deleteWeeklyReport(id) {
+  const response = await fetch(
+    `${API_URL}/api/weekly-reports/${id}`,
+    {
+      method: "DELETE",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Rapor silinemedi");
+  }
+
+  return true;
 }

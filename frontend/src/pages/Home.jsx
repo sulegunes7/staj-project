@@ -3,6 +3,7 @@ import {
   getProjects,
   createProject,
   updateProject,
+  deleteProject,
 } from "../services/api";
 
 function Home() {
@@ -97,6 +98,33 @@ function Home() {
       );
     } finally {
       setSaving(false);
+    }
+  }
+
+  async function handleDelete(project) {
+    const confirmed = window.confirm(
+      `"${project.name}" projesini silmek istediğinize emin misiniz?`
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      setError("");
+      setSuccess("");
+
+      await deleteProject(project.id);
+
+      setSuccess("Proje başarıyla silindi.");
+
+      if (editingId === project.id) {
+        resetForm();
+      }
+
+      await loadProjects();
+    } catch (err) {
+      setError("Proje silinemedi.");
     }
   }
 
@@ -210,7 +238,10 @@ function Home() {
         {!loading && projects.length > 0 && (
           <div className="project-grid">
             {projects.map((project) => (
-              <article className="project-card" key={project.id}>
+              <article
+                className="project-card"
+                key={project.id}
+              >
                 <div className="project-card-top">
                   <span className="project-number">
                     #{project.id}
@@ -230,9 +261,18 @@ function Home() {
 
                 <div className="project-card-footer">
                   <button
+                    type="button"
                     onClick={() => startEditing(project)}
                   >
                     Düzenle
+                  </button>
+
+                  <button
+                    type="button"
+                    className="secondary-button"
+                    onClick={() => handleDelete(project)}
+                  >
+                    Sil
                   </button>
                 </div>
               </article>
