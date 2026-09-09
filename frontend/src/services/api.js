@@ -152,3 +152,117 @@ export async function deleteWeeklyReport(id) {
 
   return true;
 }
+// Work Item'ları getir
+export async function getWorkItems() {
+  const response = await fetch(`${API_URL}/api/work-items`);
+
+  if (!response.ok) {
+    throw new Error("Work item'lar alınamadı");
+  }
+
+  return response.json();
+}
+
+// Yeni Work Item oluştur
+export async function createWorkItem(workItem) {
+  const response = await fetch(`${API_URL}/api/work-items`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(workItem),
+  });
+
+  if (!response.ok) {
+    throw new Error("Work item oluşturulamadı");
+  }
+
+  return response.json();
+}
+
+// Work Item güncelle
+export async function updateWorkItem(id, workItem) {
+  const response = await fetch(`${API_URL}/api/work-items/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(workItem),
+  });
+
+  if (!response.ok) {
+    throw new Error("Work item güncellenemedi");
+  }
+
+  return response.json();
+}
+
+// Work Item sil
+export async function deleteWorkItem(id) {
+  const response = await fetch(`${API_URL}/api/work-items/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error("Work item silinemedi");
+  }
+
+  return true;
+}
+// Riskleri getir
+export async function getRisks() {
+  const response = await fetch(`${API_URL}/api/risks`);
+
+  if (!response.ok) {
+    throw new Error("Riskler alınamadı");
+  }
+
+  return response.json();
+}
+
+// Yeni risk oluştur
+export async function createRisk(risk) {
+  const response = await fetch(`${API_URL}/api/risks`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(risk),
+  });
+
+  if (!response.ok) {
+    throw new Error("Risk oluşturulamadı");
+  }
+
+  return response.json();
+}
+
+// Risk güncelle
+export async function updateRisk(id, risk) {
+  const response = await fetch(`${API_URL}/api/risks/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(risk),
+  });
+
+  if (!response.ok) {
+    throw new Error("Risk güncellenemedi");
+  }
+
+  return response.json();
+}
+
+// Risk sil
+export async function deleteRisk(id) {
+  const response = await fetch(`${API_URL}/api/risks/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error("Risk silinemedi");
+  }
+
+  return true;
+}

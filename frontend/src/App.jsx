@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Home from "./pages/Home";
 import WeeklyReports from "./pages/WeeklyReports";
+import WorkItems from "./pages/WorkItems";
+import Risks from "./pages/Risks";
 import "./App.css";
 
 function App() {
@@ -26,6 +28,20 @@ function App() {
             >
               Haftalık Raporlar
             </button>
+
+            <button
+              className={page === "work-items" ? "active" : ""}
+              onClick={() => setPage("work-items")}
+            >
+              İşler
+            </button>
+
+            <button
+              className={page === "risks" ? "active" : ""}
+              onClick={() => setPage("risks")}
+            >
+              Riskler
+            </button>
           </div>
         </div>
       </nav>
@@ -34,6 +50,10 @@ function App() {
         {page === "projects" && <Home />}
 
         {page === "reports" && <WeeklyReports />}
+
+        {page === "work-items" && <WorkItems />}
+
+        {page === "risks" && <Risks />}
       </main>
     </div>
   );
