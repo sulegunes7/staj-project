@@ -3,10 +3,11 @@ import Home from "./pages/Home";
 import WeeklyReports from "./pages/WeeklyReports";
 import WorkItems from "./pages/WorkItems";
 import Risks from "./pages/Risks";
+import Dashboard from "./pages/Dashboard";
 import "./App.css";
 
 function App() {
-  const [page, setPage] = useState("projects");
+  const [page, setPage] = useState("dashboard");
 
   return (
     <div className="app">
@@ -15,6 +16,13 @@ function App() {
           <h2>Staj Takip Sistemi</h2>
 
           <div className="nav-buttons">
+            <button
+              className={page === "dashboard" ? "active" : ""}
+              onClick={() => setPage("dashboard")}
+            >
+              Dashboard
+            </button>
+
             <button
               className={page === "projects" ? "active" : ""}
               onClick={() => setPage("projects")}
@@ -47,6 +55,8 @@ function App() {
       </nav>
 
       <main className="container">
+        {page === "dashboard" && <Dashboard />}
+
         {page === "projects" && <Home />}
 
         {page === "reports" && <WeeklyReports />}
