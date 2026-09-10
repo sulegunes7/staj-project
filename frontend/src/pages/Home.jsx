@@ -26,8 +26,10 @@ function Home() {
       setError("");
 
       const data = await getProjects();
+
       setProjects(data);
     } catch (err) {
+      console.error("Projeler yüklenirken hata:", err);
       setError("Projeler yüklenemedi.");
     } finally {
       setLoading(false);
@@ -40,8 +42,9 @@ function Home() {
 
   function startEditing(project) {
     setEditingId(project.id);
-    setName(project.name);
+    setName(project.name || "");
     setDescription(project.description || "");
+
     setError("");
     setSuccess("");
   }
@@ -69,28 +72,33 @@ function Home() {
       return;
     }
 
+    if (!description.trim()) {
+      setError("Proje açıklaması boş bırakılamaz.");
+      return;
+    }
+
+    const projectData = {
+      name: name.trim(),
+      description: description.trim(),
+    };
+
     try {
       setSaving(true);
 
       if (editingId !== null) {
-        await updateProject(editingId, {
-          name: name.trim(),
-          description: description.trim(),
-        });
-
+        await updateProject(editingId, projectData);
         setSuccess("Proje başarıyla güncellendi.");
       } else {
-        await createProject({
-          name: name.trim(),
-          description: description.trim(),
-        });
-
+        await createProject(projectData);
         setSuccess("Proje başarıyla oluşturuldu.");
       }
 
       resetForm();
+
       await loadProjects();
     } catch (err) {
+      console.error("Proje kaydedilirken hata:", err);
+
       setError(
         editingId !== null
           ? "Proje güncellenemedi."
@@ -101,9 +109,9 @@ function Home() {
     }
   }
 
-  async function handleDelete(project) {
+  async function handleDelete(id) {
     const confirmed = window.confirm(
-      `"${project.name}" projesini silmek istediğinize emin misiniz?`
+      "Bu projeyi silmek istediğinize emin misiniz?"
     );
 
     if (!confirmed) {
@@ -114,172 +122,106 @@ function Home() {
       setError("");
       setSuccess("");
 
-      await deleteProject(project.id);
+      await deleteProject(id);
 
       setSuccess("Proje başarıyla silindi.");
 
-      if (editingId === project.id) {
-        resetForm();
-      }
-
       await loadProjects();
     } catch (err) {
+      console.error("Proje silinirken hata:", err);
       setError("Proje silinemedi.");
     }
   }
 
   return (
-    <div className="home-page">
-      <div className="page-header">
+    <div>
+      <h1>Projeler</h1>
+
+      <h2>
+        {editingId !== null ? "Projeyi Düzenle" : "Yeni Proje"}
+      </h2>
+
+      <form onSubmit={handleSubmit}>
         <div>
-          <h1>Staj Projem</h1>
-          <p className="page-subtitle">
-            Projelerini ve çalışmalarını buradan takip et.
-          </p>
+          <label>Proje Adı</label>
+          <br />
+
+          <input
+            type="text"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+            placeholder="Örn: Staj Projesi"
+          />
         </div>
-      </div>
 
-      <section className="form-section">
-        <h2>
-          {editingId !== null
-            ? "Projeyi Düzenle"
-            : "Yeni Proje Oluştur"}
-        </h2>
+        <br />
 
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>Proje Adı</label>
+        <div>
+          <label>Proje Açıklaması</label>
+          <br />
 
-            <input
-              type="text"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-              placeholder="Proje adını girin"
-            />
-          </div>
+          <textarea
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
+            placeholder="Proje hakkında kısa açıklama"
+            rows="5"
+          />
+        </div>
 
-          <div className="form-group">
-            <label>Açıklama</label>
+        <br />
 
-            <textarea
-              value={description}
-              onChange={(event) =>
-                setDescription(event.target.value)
-              }
-              placeholder="Proje açıklamasını girin"
-              rows="4"
-            />
-          </div>
+        <button type="submit" disabled={saving}>
+          {saving
+            ? "Kaydediliyor..."
+            : editingId !== null
+              ? "Projeyi Güncelle"
+              : "Proje Oluştur"}
+        </button>
 
-          <div className="form-actions">
-            <button type="submit" disabled={saving}>
-              {saving
-                ? "Kaydediliyor..."
-                : editingId !== null
-                  ? "Projeyi Güncelle"
-                  : "Proje Oluştur"}
-            </button>
+        {editingId !== null && (
+          <button type="button" onClick={cancelEditing}>
+            İptal
+          </button>
+        )}
+      </form>
 
-            {editingId !== null && (
-              <button
-                type="button"
-                className="secondary-button"
-                onClick={cancelEditing}
-              >
-                İptal
+      {error && <p>❌ {error}</p>}
+
+      {success && <p>✅ {success}</p>}
+
+      <hr />
+
+      <h2>Proje Listesi</h2>
+
+      {loading && <p>Projeler yükleniyor...</p>}
+
+      {!loading && !error && projects.length === 0 && (
+        <p>Henüz proje bulunmuyor.</p>
+      )}
+
+      {!loading && projects.length > 0 && (
+        <div>
+          {projects.map((project) => (
+            <div key={project.id}>
+              <h3>{project.name}</h3>
+
+              <p>{project.description}</p>
+
+              <p>
+                <strong>Proje ID:</strong> {project.id}
+              </p>
+
+              <button onClick={() => startEditing(project)}>
+                Düzenle
               </button>
-            )}
-          </div>
-        </form>
-      </section>
 
-      {error && (
-        <div className="message error-message">
-          ❌ {error}
+              <button onClick={() => handleDelete(project.id)}>
+                Sil
+              </button>
+            </div>
+          ))}
         </div>
       )}
-
-      {success && (
-        <div className="message success-message">
-          ✅ {success}
-        </div>
-      )}
-
-      <section className="projects-section">
-        <div className="section-header">
-          <div>
-            <h2>Projeler</h2>
-            <p>Mevcut projelerin</p>
-          </div>
-
-          {!loading && projects.length > 0 && (
-            <span className="project-count">
-              {projects.length} proje
-            </span>
-          )}
-        </div>
-
-        {loading && (
-          <div className="empty-state">
-            <p>Projeler yükleniyor...</p>
-          </div>
-        )}
-
-        {!loading && !error && projects.length === 0 && (
-          <div className="empty-state">
-            <div className="empty-icon">📁</div>
-            <h3>Henüz proje yok</h3>
-            <p>
-              İlk projenizi oluşturarak staj takibine başlayın.
-            </p>
-          </div>
-        )}
-
-        {!loading && projects.length > 0 && (
-          <div className="project-grid">
-            {projects.map((project) => (
-              <article
-                className="project-card"
-                key={project.id}
-              >
-                <div className="project-card-top">
-                  <span className="project-number">
-                    #{project.id}
-                  </span>
-
-                  <span className="project-status">
-                    Aktif
-                  </span>
-                </div>
-
-                <h3>{project.name}</h3>
-
-                <p>
-                  {project.description ||
-                    "Bu proje için henüz açıklama eklenmemiş."}
-                </p>
-
-                <div className="project-card-footer">
-                  <button
-                    type="button"
-                    onClick={() => startEditing(project)}
-                  >
-                    Düzenle
-                  </button>
-
-                  <button
-                    type="button"
-                    className="secondary-button"
-                    onClick={() => handleDelete(project)}
-                  >
-                    Sil
-                  </button>
-                </div>
-              </article>
-            ))}
-          </div>
-        )}
-      </section>
     </div>
   );
 }

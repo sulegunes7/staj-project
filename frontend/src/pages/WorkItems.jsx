@@ -189,7 +189,7 @@ function WorkItems() {
       return id ? `Rapor #${id}` : "Belirtilmemiş";
     }
 
-    return `Hafta ${report.week}`;
+    return report.week;
   }
 
   function getStatusLabel(status) {
@@ -230,6 +230,7 @@ function WorkItems() {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Proje</label>
+
             <select
               value={projectId}
               onChange={handleProjectChange}
@@ -246,6 +247,7 @@ function WorkItems() {
 
           <div className="form-group">
             <label>Haftalık Rapor</label>
+
             <select
               value={reportId}
               onChange={(event) => setReportId(event.target.value)}
@@ -259,7 +261,7 @@ function WorkItems() {
 
               {filteredReports.map((report) => (
                 <option key={report.id} value={report.id}>
-                  Hafta {report.week}
+                  {report.week}
                 </option>
               ))}
             </select>
@@ -267,6 +269,7 @@ function WorkItems() {
 
           <div className="form-group">
             <label>İş Başlığı</label>
+
             <input
               type="text"
               value={title}
@@ -277,6 +280,7 @@ function WorkItems() {
 
           <div className="form-group">
             <label>Açıklama</label>
+
             <textarea
               value={description}
               onChange={(event) => setDescription(event.target.value)}
@@ -287,6 +291,7 @@ function WorkItems() {
 
           <div className="form-group">
             <label>Sorumlu</label>
+
             <input
               type="text"
               value={responsible}
@@ -297,6 +302,7 @@ function WorkItems() {
 
           <div className="form-group">
             <label>Durum</label>
+
             <select
               value={status}
               onChange={(event) => setStatus(event.target.value)}
@@ -310,6 +316,7 @@ function WorkItems() {
 
           <div className="form-group">
             <label>Teslim Tarihi</label>
+
             <input
               type="date"
               value={dueDate}
