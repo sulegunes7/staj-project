@@ -1,34 +1,36 @@
-# Staj Projesi
+# Staj Takip Sistemi
 
-Spring Boot + PostgreSQL backend ve React + Vite frontend içeren full stack staj projesidir.
+Staj sürecinde gerçekleştirilen projelerin, haftalık çalışmaların, işlerin ve risklerin takip edilmesini sağlayan full stack web uygulamasıdır.
 
-## Proje Hakkında
+## Proje Amacı
 
-Bu projede frontend ve backend arasında REST API üzerinden iletişim sağlanmıştır.
+Bu proje, staj sürecindeki çalışmaların düzenli şekilde takip edilmesi amacıyla geliştirilmiştir.
 
 Uygulama üzerinden:
-- Projeler listelenebilir.
-- Yeni proje oluşturulabilir.
-- Projeler güncellenebilir.
-- Projeler silinebilir.
-- Haftalık staj raporları listelenebilir.
-- Yeni haftalık rapor oluşturulabilir.
-- Haftalık raporlar güncellenebilir.
+
+- Projeler oluşturulabilir, görüntülenebilir, güncellenebilir ve silinebilir.
+- Haftalık staj raporları oluşturulabilir ve güncellenebilir.
+- Projelere bağlı işler takip edilebilir.
+- İşlere bağlı riskler oluşturulabilir, güncellenebilir ve silinebilir.
+- Dashboard üzerinden genel proje durumu görüntülenebilir.
 
 ## Kullanılan Teknolojiler
 
 ### Backend
+
 - Java 17
-- Spring Boot
+- Spring Boot 4.0.8
 - Spring Data JPA
 - Hibernate
 - Maven
 - REST API
 
 ### Veritabanı
-- PostgreSQL 17
+
+- PostgreSQL 17.11
 
 ### Frontend
+
 - React
 - Vite
 - JavaScript
@@ -46,36 +48,39 @@ Uygulama üzerinden:
 
 ```text
 staj projem/
+│
 ├── backend/
 │   ├── src/
-│   │   └── main/
-│   │       ├── java/
-│   │       └── resources/
 │   ├── pom.xml
 │   └── mvnw.cmd
 │
-└── frontend/
-    ├── src/
-    ├── package.json
-    └── vite.config.js
+├── frontend/
+│   ├── src/
+│   ├── package.json
+│   └── vite.config.js
+│
+└── README.md
 ```
 
 ## Backend'i Çalıştırma
 
-Proje klasöründen:
+Proje klasöründen backend klasörüne geçilir:
 
 ```powershell
 cd backend
+```
+
+Spring Boot uygulaması Maven Wrapper kullanılarak çalıştırılır:
+
+```powershell
 .\mvnw.cmd spring-boot:run
 ```
 
-Backend varsayılan olarak:
+Backend varsayılan olarak aşağıdaki adreste çalışır:
 
 ```text
 http://localhost:8080
 ```
-
-adresinde çalışır.
 
 Backend bağlantısını kontrol etmek için:
 
@@ -91,17 +96,48 @@ Backend is running
 
 ## Frontend'i Çalıştırma
 
-Frontend klasörüne geç:
+Yeni bir terminal açılarak frontend klasörüne geçilir:
 
 ```powershell
 cd frontend
+```
+
+Gerekli paketler yüklenir:
+
+```powershell
 npm install
+```
+
+Frontend başlatılır:
+
+```powershell
 npm run dev
 ```
 
-Vite tarafından verilen localhost adresinden uygulamaya erişilebilir.
+Vite tarafından gösterilen localhost adresinden uygulamaya erişilebilir.
+
+## Veritabanı
+
+Uygulama PostgreSQL veritabanı kullanmaktadır.
+
+Mevcut geliştirme ortamındaki bağlantı bilgileri:
+
+```text
+Host: localhost
+Port: 5432
+Database: staj_db
+Schema: public
+```
+
+Spring Boot backend, PostgreSQL bağlantısını JDBC üzerinden gerçekleştirmektedir.
 
 ## API Endpointleri
+
+### Health
+
+| Method | Endpoint | Açıklama |
+|---|---|---|
+| GET | `/api/health` | Backend bağlantısını kontrol eder |
 
 ### Projects
 
@@ -119,42 +155,111 @@ Vite tarafından verilen localhost adresinden uygulamaya erişilebilir.
 | GET | `/api/weekly-reports` | Tüm haftalık raporları getirir |
 | POST | `/api/weekly-reports` | Yeni haftalık rapor oluşturur |
 | PUT | `/api/weekly-reports/{id}` | Haftalık raporu günceller |
+| DELETE | `/api/weekly-reports/{id}` | Haftalık raporu siler |
 
-## Veritabanı
+### Work Items
 
-Backend PostgreSQL veritabanı ile çalışmaktadır.
+| Method | Endpoint | Açıklama |
+|---|---|---|
+| GET | `/api/work-items` | Tüm işleri getirir |
+| POST | `/api/work-items` | Yeni iş oluşturur |
+| PUT | `/api/work-items/{id}` | İşi günceller |
+| DELETE | `/api/work-items/{id}` | İşi siler |
 
-Veritabanı bağlantısı Spring Boot yapılandırması üzerinden sağlanmaktadır.
+### Risks
+
+| Method | Endpoint | Açıklama |
+|---|---|---|
+| GET | `/api/risks` | Tüm riskleri getirir |
+| POST | `/api/risks` | Yeni risk oluşturur |
+| PUT | `/api/risks/{id}` | Riski günceller |
+| DELETE | `/api/risks/{id}` | Riski siler |
+| GET | `/api/risks/work-item/{workItemId}` | İşe bağlı riskleri getirir |
+| GET | `/api/risks/project/{projectId}` | Projeye bağlı riskleri getirir |
+
+## Uygulama Özellikleri
+
+### Dashboard
+
+Dashboard üzerinden projelerin genel durumu görüntülenebilir.
+
+- Proje sayısı
+- Haftalık rapor sayısı
+- İş sayısı
+- Risk sayısı
+
+gibi temel bilgiler görüntülenir.
+
+### Proje Yönetimi
+
+Projeler için temel CRUD işlemleri uygulanmıştır.
+
+- Proje oluşturma
+- Proje listeleme
+- Proje güncelleme
+- Proje silme
+
+### Haftalık Rapor Yönetimi
+
+Staj sürecindeki haftalık çalışmalar sisteme kaydedilebilir.
+
+- Haftalık rapor oluşturma
+- Raporları listeleme
+- Rapor güncelleme
+- Rapor silme
+
+### İş Takibi
+
+Projeye bağlı işler oluşturulabilir ve takip edilebilir.
+
+- İş oluşturma
+- İş listeleme
+- İş güncelleme
+- İş silme
+
+### Risk Yönetimi
+
+İşlere ve projelere bağlı riskler oluşturulabilir ve yönetilebilir.
+
+- Risk oluşturma
+- Risk listeleme
+- Risk güncelleme
+- Risk silme
+
+## Backend Mimarisi
+
+Backend katmanlı mimari yaklaşımı kullanılarak geliştirilmiştir.
+
+Temel yapı:
 
 ```text
-Host: localhost
-Port: 5432
-Database: postgres
+Controller
+    ↓
+Service
+    ↓
+Repository
+    ↓
+Entity
+    ↓
+PostgreSQL
 ```
 
-## Haftalık Geliştirme Süreci
+Spring Data JPA ve Hibernate kullanılarak veritabanı işlemleri gerçekleştirilmiştir.
 
-### 1. Hafta
+## Frontend - Backend İletişimi
 
-Backend altyapısı oluşturuldu. Spring Boot proje yapısı kuruldu, PostgreSQL veritabanı bağlantısı sağlandı ve JPA/Hibernate yapılandırıldı.
+React frontend uygulaması, backend tarafından sağlanan REST API endpointleri ile iletişim kurmaktadır.
 
-Projeler ve haftalık raporlar için model, repository, service ve controller katmanları geliştirildi. Backend API endpointleri oluşturularak temel veri akışı test edildi.
+Frontend tarafında API istekleri merkezi bir servis yapısı üzerinden yönetilmektedir.
 
-### 2. Hafta
-
-Frontend ve backend API entegrasyonu tamamlandı.
-
-React ve Vite tabanlı frontend uygulaması backend API ile bağlandı. Proje listeleme, oluşturma, güncelleme ve silme işlemleri frontend üzerinden gerçekleştirildi.
-
-Haftalık rapor listeleme, oluşturma ve güncelleme işlemleri eklendi. Form doğrulamaları ve hata mesajları uygulandı. CORS ayarları yapılarak frontend-backend iletişimi sağlandı.
-
-Temel CRUD işlemleri frontend üzerinden test edildi.
+Frontend ve backend farklı portlarda çalıştığı için gerekli CORS yapılandırması backend tarafında yapılmıştır.
 
 ## Test
 
-Projenin temel işlemleri test edilmiştir:
+Projenin geliştirme sürecinde aşağıdaki işlemler test edilmiştir:
 
 - Backend health kontrolü
+- PostgreSQL bağlantısı
 - Proje listeleme
 - Proje oluşturma
 - Proje güncelleme
@@ -162,9 +267,53 @@ Projenin temel işlemleri test edilmiştir:
 - Haftalık rapor listeleme
 - Haftalık rapor oluşturma
 - Haftalık rapor güncelleme
+- Haftalık rapor silme
+- İş oluşturma
+- İş silme
+- Risk oluşturma
+- Risk güncelleme
+- Risk silme
 - Frontend-backend API iletişimi
-- PostgreSQL bağlantısı
+- Sayfa yenilendiğinde verilerin korunması
+- Maven build ve test süreci
 
-## Durum
+Backend build/test kontrolünde:
 
-Projenin temel full stack geliştirme ve CRUD işlemleri tamamlanmıştır.
+```text
+Tests run: 1
+Failures: 0
+Errors: 0
+BUILD SUCCESS
+```
+
+sonucu alınmıştır.
+
+## Haftalık Geliştirme Süreci
+
+### 1. Hafta
+
+Backend altyapısı oluşturuldu. Spring Boot proje yapısı kuruldu, PostgreSQL veritabanı bağlantısı sağlandı ve JPA/Hibernate yapılandırıldı.
+
+Projeler ve haftalık raporlar için model, repository, service ve controller katmanları geliştirildi. REST API endpointleri oluşturularak temel veri akışı test edildi.
+
+### 2. Hafta
+
+Frontend ve backend API entegrasyonu tamamlandı.
+
+React ve Vite tabanlı frontend uygulaması backend API ile bağlandı. Proje listeleme, oluşturma, güncelleme ve silme işlemleri frontend üzerinden gerçekleştirildi.
+
+Haftalık rapor işlemleri eklendi. İş ve risk yönetimi özellikleri geliştirildi.
+
+Form doğrulamaları, hata mesajları ve CORS yapılandırması uygulandı.
+
+Dashboard ve kullanıcı arayüzü düzenlemeleri tamamlandı.
+
+Temel CRUD işlemleri frontend üzerinden test edildi.
+
+## Projenin Güncel Durumu
+
+Projenin temel full stack geliştirme süreci tamamlanmıştır.
+
+Frontend, backend ve PostgreSQL veritabanı birlikte çalışmaktadır.
+
+Temel CRUD işlemleri, proje takibi, haftalık rapor yönetimi, iş takibi, risk yönetimi ve dashboard özellikleri uygulanmış ve test edilmiştir.
