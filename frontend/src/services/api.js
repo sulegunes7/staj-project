@@ -22,7 +22,10 @@ export async function getUsers() {
   return response.json();
 }
 
-// Projeleri getir
+// =========================
+// PROJELER
+// =========================
+
 export async function getProjects() {
   const response = await fetch(`${API_URL}/api/projects`);
 
@@ -33,7 +36,6 @@ export async function getProjects() {
   return response.json();
 }
 
-// Yeni proje oluştur
 export async function createProject(project) {
   const response = await fetch(`${API_URL}/api/projects`, {
     method: "POST",
@@ -50,7 +52,6 @@ export async function createProject(project) {
   return response.json();
 }
 
-// Projeyi güncelle
 export async function updateProject(id, project) {
   const response = await fetch(`${API_URL}/api/projects/${id}`, {
     method: "PUT",
@@ -67,7 +68,22 @@ export async function updateProject(id, project) {
   return response.json();
 }
 
-// Haftalık raporları getir
+export async function deleteProject(id) {
+  const response = await fetch(`${API_URL}/api/projects/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error("Proje silinemedi");
+  }
+
+  return true;
+}
+
+// =========================
+// HAFTALIK RAPORLAR
+// =========================
+
 export async function getWeeklyReports() {
   const response = await fetch(`${API_URL}/api/weekly-reports`);
 
@@ -78,7 +94,6 @@ export async function getWeeklyReports() {
   return response.json();
 }
 
-// Yeni haftalık rapor oluştur
 export async function createWeeklyReport(report) {
   const response = await fetch(`${API_URL}/api/weekly-reports`, {
     method: "POST",
@@ -95,7 +110,6 @@ export async function createWeeklyReport(report) {
   return response.json();
 }
 
-// Haftalık raporu güncelle
 export async function updateWeeklyReport(id, report) {
   const response = await fetch(
     `${API_URL}/api/weekly-reports/${id}`,
@@ -124,20 +138,7 @@ export async function updateWeeklyReport(id, report) {
 
   return response.json();
 }
-export async function deleteProject(id) {
-  const response = await fetch(
-    `${API_URL}/api/projects/${id}`,
-    {
-      method: "DELETE",
-    }
-  );
 
-  if (!response.ok) {
-    throw new Error("Proje silinemedi.");
-  }
-
-  return true;
-}
 export async function deleteWeeklyReport(id) {
   const response = await fetch(
     `${API_URL}/api/weekly-reports/${id}`,
@@ -147,12 +148,16 @@ export async function deleteWeeklyReport(id) {
   );
 
   if (!response.ok) {
-    throw new Error("Rapor silinemedi");
+    throw new Error("Haftalık rapor silinemedi");
   }
 
   return true;
 }
-// Work Item'ları getir
+
+// =========================
+// WORK ITEMLAR
+// =========================
+
 export async function getWorkItems() {
   const response = await fetch(`${API_URL}/api/work-items`);
 
@@ -163,7 +168,6 @@ export async function getWorkItems() {
   return response.json();
 }
 
-// Yeni Work Item oluştur
 export async function createWorkItem(workItem) {
   const response = await fetch(`${API_URL}/api/work-items`, {
     method: "POST",
@@ -180,7 +184,6 @@ export async function createWorkItem(workItem) {
   return response.json();
 }
 
-// Work Item güncelle
 export async function updateWorkItem(id, workItem) {
   const response = await fetch(`${API_URL}/api/work-items/${id}`, {
     method: "PUT",
@@ -197,7 +200,6 @@ export async function updateWorkItem(id, workItem) {
   return response.json();
 }
 
-// Work Item sil
 export async function deleteWorkItem(id) {
   const response = await fetch(`${API_URL}/api/work-items/${id}`, {
     method: "DELETE",
@@ -209,7 +211,11 @@ export async function deleteWorkItem(id) {
 
   return true;
 }
-// Riskleri getir
+
+// =========================
+// RİSKLER
+// =========================
+
 export async function getRisks() {
   const response = await fetch(`${API_URL}/api/risks`);
 
@@ -220,7 +226,6 @@ export async function getRisks() {
   return response.json();
 }
 
-// Yeni risk oluştur
 export async function createRisk(risk) {
   const response = await fetch(`${API_URL}/api/risks`, {
     method: "POST",
@@ -237,7 +242,6 @@ export async function createRisk(risk) {
   return response.json();
 }
 
-// Risk güncelle
 export async function updateRisk(id, risk) {
   const response = await fetch(`${API_URL}/api/risks/${id}`, {
     method: "PUT",
@@ -254,7 +258,6 @@ export async function updateRisk(id, risk) {
   return response.json();
 }
 
-// Risk sil
 export async function deleteRisk(id) {
   const response = await fetch(`${API_URL}/api/risks/${id}`, {
     method: "DELETE",

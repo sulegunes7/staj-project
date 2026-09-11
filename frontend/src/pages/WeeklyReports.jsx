@@ -29,7 +29,7 @@ function WeeklyReports() {
       const data = await getWeeklyReports();
       setReports(data);
     } catch (err) {
-      console.error("Raporlar yüklenirken hata:", err);
+      console.error("Haftalık raporlar yüklenirken hata:", err);
       setError("Haftalık raporlar yüklenemedi.");
     } finally {
       setLoading(false);
@@ -45,6 +45,7 @@ function WeeklyReports() {
     setWeek(report.week || "");
     setContent(report.content || "");
     setProjectId(String(report.projectId ?? ""));
+
     setError("");
     setSuccess("");
   }
@@ -115,9 +116,9 @@ function WeeklyReports() {
     }
   }
 
-  async function handleDelete(report) {
+  async function handleDelete(id) {
     const confirmed = window.confirm(
-      `"${report.week}" raporunu silmek istediğinize emin misiniz?`
+      "Bu haftalık raporu silmek istediğinize emin misiniz?"
     );
 
     if (!confirmed) {
@@ -128,77 +129,127 @@ function WeeklyReports() {
       setError("");
       setSuccess("");
 
-      await deleteWeeklyReport(report.id);
+      await deleteWeeklyReport(id);
 
-      setSuccess("Rapor başarıyla silindi.");
-
-      if (editingId === report.id) {
-        resetForm();
-      }
+      setSuccess("Haftalık rapor başarıyla silindi.");
 
       await loadReports();
     } catch (err) {
       console.error("Rapor silinirken hata:", err);
-      setError("Rapor silinemedi.");
+      setError("Haftalık rapor silinemedi.");
     }
   }
 
   return (
     <div className="reports-page">
+      {/* Sayfa başlığı */}
+
       <div className="page-header">
         <div>
+          <span className="page-eyebrow">STAJ TAKİP SİSTEMİ</span>
+
           <h1>Haftalık Raporlar</h1>
-          <p>Staj sürecindeki haftalık çalışmalarını takip et.</p>
+
+          <p>
+            Her hafta yaptığınız çalışmaları kaydedin ve geçmiş
+            raporlarınızı kolayca takip edin.
+          </p>
+        </div>
+
+        <div className="project-count">
+          <span>Toplam Rapor</span>
+          <strong>{reports.length}</strong>
         </div>
       </div>
 
-      <section className="form-card">
-        <h2>
-          {editingId !== null
-            ? "Raporu Düzenle"
-            : "Yeni Haftalık Rapor"}
-        </h2>
+      {/* Mesajlar */}
 
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>Hafta</label>
+      {error && (
+        <div className="message message-error">
+          <span>⚠️</span>
+          {error}
+        </div>
+      )}
 
-            <input
-              type="text"
-              value={week}
-              onChange={(event) => setWeek(event.target.value)}
-              placeholder="Örn: 3. Hafta"
-            />
+      {success && (
+        <div className="message message-success">
+          <span>✓</span>
+          {success}
+        </div>
+      )}
+
+      {/* Rapor formu */}
+
+      <section className="project-form-card">
+        <div className="section-heading">
+          <div className="section-icon">
+            {editingId !== null ? "✎" : "+"}
           </div>
 
-          <div className="form-group">
-            <label>Proje ID</label>
+          <div>
+            <h2>
+              {editingId !== null
+                ? "Raporu Düzenle"
+                : "Yeni Haftalık Rapor"}
+            </h2>
 
-            <input
-              type="number"
-              value={projectId}
-              onChange={(event) => setProjectId(event.target.value)}
-              placeholder="Örn: 1"
-            />
+            <p>
+              {editingId !== null
+                ? "Rapor bilgilerini güncelleyin."
+                : "Bu haftaki çalışmalarınızı sisteme kaydedin."}
+            </p>
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit} className="project-form">
+          <div className="report-form-grid">
+            <div className="form-field">
+              <label htmlFor="report-week">Hafta</label>
+
+              <input
+                id="report-week"
+                type="text"
+                value={week}
+                onChange={(event) => setWeek(event.target.value)}
+                placeholder="Örn: 2. Hafta"
+              />
+            </div>
+
+            <div className="form-field">
+              <label htmlFor="report-project">Proje ID</label>
+
+              <input
+                id="report-project"
+                type="number"
+                value={projectId}
+                onChange={(event) => setProjectId(event.target.value)}
+                placeholder="Örn: 1"
+              />
+            </div>
           </div>
 
-          <div className="form-group">
-            <label>Rapor İçeriği</label>
+          <div className="form-field">
+            <label htmlFor="report-content">Rapor İçeriği</label>
 
             <textarea
+              id="report-content"
               value={content}
               onChange={(event) => setContent(event.target.value)}
-              placeholder="Bu hafta yapılan çalışmaları yazın..."
+              placeholder="Bu hafta yaptığınız çalışmaları yazın..."
               rows="6"
             />
           </div>
 
           <div className="form-actions">
-            <button type="submit" disabled={saving}>
+            <button
+              type="submit"
+              className="primary-button"
+              disabled={saving}
+            >
               {saving
                 ? "Kaydediliyor..."
                 : editingId !== null
-                  ? "Raporu Güncelle"
+                  ? "Değişiklikleri Kaydet"
                   : "Rapor Oluştur"}
             </button>
 
@@ -215,80 +266,73 @@ function WeeklyReports() {
         </form>
       </section>
 
-      {error && (
-        <div className="message error-message">
-          ❌ {error}
-        </div>
-      )}
+      {/* Rapor listesi */}
 
-      {success && (
-        <div className="message success-message">
-          ✅ {success}
-        </div>
-      )}
-
-      <section className="reports-section">
-        <div className="section-header">
+      <section className="projects-section">
+        <div className="section-title-row">
           <div>
-            <h2>Raporlar</h2>
-            <p>Geçmiş haftalarda yaptığın çalışmalar.</p>
-          </div>
+            <h2>Rapor Geçmişi</h2>
 
-          <span className="report-count">
-            {reports.length} rapor
-          </span>
+            <p>
+              Daha önce oluşturduğunuz haftalık raporlar.
+            </p>
+          </div>
         </div>
 
         {loading && (
           <div className="empty-state">
+            <div className="loading-spinner"></div>
             <p>Raporlar yükleniyor...</p>
           </div>
         )}
 
-        {!loading && reports.length === 0 && !error && (
+        {!loading && reports.length === 0 && (
           <div className="empty-state">
-            <h3>Henüz rapor bulunmuyor</h3>
+            <div className="empty-icon">📝</div>
+
+            <h3>Henüz rapor yok</h3>
+
             <p>
-              İlk haftalık raporunu yukarıdaki formdan
-              oluşturabilirsin.
+              İlk haftalık raporunuzu yukarıdaki formu kullanarak
+              oluşturabilirsiniz.
             </p>
           </div>
         )}
 
         {!loading && reports.length > 0 && (
-          <div className="reports-grid">
+          <div className="reports-list">
             {reports.map((report) => (
-              <article
-                className="report-card"
-                key={report.id}
-              >
-                <div className="report-card-top">
-                  <span className="report-week">
-                    {report.week}
-                  </span>
+              <article className="report-card" key={report.id}>
+                <div className="report-card-header">
+                  <div className="report-week">
+                    <div className="report-icon">📝</div>
 
-                  <span className="report-project">
+                    <div>
+                      <span>HAFTALIK RAPOR</span>
+                      <h3>{report.week}</h3>
+                    </div>
+                  </div>
+
+                  <span className="project-id">
                     Proje #{report.projectId}
                   </span>
                 </div>
 
-                <p className="report-content">
-                  {report.content}
-                </p>
+                <div className="report-content">
+                  <p>{report.content}</p>
+                </div>
 
-                <div className="report-card-actions">
+                <div className="report-card-footer">
                   <button
-                    type="button"
-                    onClick={() => startEditing(report)}
                     className="edit-button"
+                    onClick={() => startEditing(report)}
                   >
                     Düzenle
                   </button>
 
                   <button
-                    type="button"
-                    onClick={() => handleDelete(report)}
                     className="delete-button"
+                    onClick={() => handleDelete(report.id)}
                   >
                     Sil
                   </button>
