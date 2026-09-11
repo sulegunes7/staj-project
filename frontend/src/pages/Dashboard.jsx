@@ -95,247 +95,317 @@ function Dashboard() {
 
   if (loading) {
     return (
-      <div className="home-page">
-        <div className="empty-state">
-          <p>Dashboard yükleniyor...</p>
+      <div className="dashboard-page">
+        <div className="dashboard-loading">
+          <div className="loading-spinner">⏳</div>
+          <h2>Dashboard yükleniyor</h2>
+          <p>Veriler hazırlanıyor...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="home-page">
-      <div className="page-header">
+    <div className="dashboard-page">
+
+      {/* Başlık */}
+      <div className="dashboard-header">
         <div>
+          <span className="dashboard-label">
+            GENEL BAKIŞ
+          </span>
+
           <h1>Dashboard</h1>
-          <p className="page-subtitle">
-            Staj takip sistemindeki genel durumu buradan takip et.
+
+          <p>
+            Staj takip sistemindeki genel durumu
+            buradan takip edebilirsin.
           </p>
         </div>
       </div>
 
+      {/* Hata */}
       {error && (
-        <div className="message error-message">
+        <div className="dashboard-error">
           ❌ {error}
         </div>
       )}
 
-      <section className="projects-section">
-        <div className="section-header">
+      {/* Genel Özet */}
+      <section className="dashboard-section">
+
+        <div className="dashboard-section-title">
           <div>
             <h2>Genel Özet</h2>
             <p>Sistemdeki mevcut kayıtların özeti</p>
           </div>
         </div>
 
-        <div className="project-grid">
-          <article className="project-card">
-            <div className="project-card-top">
-              <span className="project-number">📁</span>
-            </div>
+        <div className="dashboard-summary-grid">
 
-            <h3>Projeler</h3>
-            <p className="dashboard-number">
-              {projects.length}
-            </p>
-            <p>Toplam proje</p>
+          <article className="summary-card">
+            <div className="summary-icon">📁</div>
+
+            <div>
+              <span>Projeler</span>
+              <strong>{projects.length}</strong>
+              <small>Toplam proje</small>
+            </div>
           </article>
 
-          <article className="project-card">
-            <div className="project-card-top">
-              <span className="project-number">📝</span>
-            </div>
+          <article className="summary-card">
+            <div className="summary-icon">📝</div>
 
-            <h3>Haftalık Raporlar</h3>
-            <p className="dashboard-number">
-              {reports.length}
-            </p>
-            <p>Toplam haftalık rapor</p>
+            <div>
+              <span>Haftalık Raporlar</span>
+              <strong>{reports.length}</strong>
+              <small>Toplam rapor</small>
+            </div>
           </article>
 
-          <article className="project-card">
-            <div className="project-card-top">
-              <span className="project-number">📋</span>
-            </div>
+          <article className="summary-card">
+            <div className="summary-icon">📋</div>
 
-            <h3>İşler</h3>
-            <p className="dashboard-number">
-              {workItems.length}
-            </p>
-            <p>Toplam iş</p>
+            <div>
+              <span>İşler</span>
+              <strong>{workItems.length}</strong>
+              <small>Toplam iş</small>
+            </div>
           </article>
 
-          <article className="project-card">
-            <div className="project-card-top">
-              <span className="project-number">⚠️</span>
-            </div>
+          <article className="summary-card">
+            <div className="summary-icon">⚠️</div>
 
-            <h3>Riskler</h3>
-            <p className="dashboard-number">
-              {risks.length}
-            </p>
-            <p>Toplam risk / engel</p>
+            <div>
+              <span>Riskler</span>
+              <strong>{risks.length}</strong>
+              <small>Toplam risk / engel</small>
+            </div>
           </article>
+
         </div>
       </section>
 
-      <section className="projects-section">
-        <div className="section-header">
+      {/* İş Durumları */}
+      <section className="dashboard-section">
+
+        <div className="dashboard-section-title">
           <div>
             <h2>İş Durumları</h2>
             <p>İşlerin mevcut durumlarına göre dağılımı</p>
           </div>
         </div>
 
-        <div className="project-grid">
-          <article className="project-card">
-            <h3>Bekleyen</h3>
-            <p className="dashboard-number">
-              {todoCount}
-            </p>
+        <div className="status-grid">
+
+          <article className="status-card">
+            <span className="status-dot todo"></span>
+            <div>
+              <span>Bekleyen</span>
+              <strong>{todoCount}</strong>
+            </div>
           </article>
 
-          <article className="project-card">
-            <h3>Devam Eden</h3>
-            <p className="dashboard-number">
-              {inProgressCount}
-            </p>
+          <article className="status-card">
+            <span className="status-dot progress"></span>
+            <div>
+              <span>Devam Eden</span>
+              <strong>{inProgressCount}</strong>
+            </div>
           </article>
 
-          <article className="project-card">
-            <h3>Tamamlanan</h3>
-            <p className="dashboard-number">
-              {doneCount}
-            </p>
+          <article className="status-card">
+            <span className="status-dot done"></span>
+            <div>
+              <span>Tamamlanan</span>
+              <strong>{doneCount}</strong>
+            </div>
           </article>
 
-          <article className="project-card">
-            <h3>Engellenen</h3>
-            <p className="dashboard-number">
-              {blockedCount}
-            </p>
+          <article className="status-card">
+            <span className="status-dot blocked"></span>
+            <div>
+              <span>Engellenen</span>
+              <strong>{blockedCount}</strong>
+            </div>
           </article>
+
         </div>
       </section>
 
-      <section className="projects-section">
-        <div className="section-header">
+      {/* Risk Durumları */}
+      <section className="dashboard-section">
+
+        <div className="dashboard-section-title">
           <div>
             <h2>Risk Durumları</h2>
             <p>Risk ve engellerin mevcut durumu</p>
           </div>
         </div>
 
-        <div className="project-grid">
-          <article className="project-card">
-            <h3>Açık</h3>
-            <p className="dashboard-number">
-              {openRiskCount}
-            </p>
+        <div className="status-grid">
+
+          <article className="status-card">
+            <span className="status-dot risk-open"></span>
+
+            <div>
+              <span>Açık</span>
+              <strong>{openRiskCount}</strong>
+            </div>
           </article>
 
-          <article className="project-card">
-            <h3>Devam Ediyor</h3>
-            <p className="dashboard-number">
-              {ongoingRiskCount}
-            </p>
+          <article className="status-card">
+            <span className="status-dot risk-progress"></span>
+
+            <div>
+              <span>Devam Ediyor</span>
+              <strong>{ongoingRiskCount}</strong>
+            </div>
           </article>
 
-          <article className="project-card">
-            <h3>Çözüldü</h3>
-            <p className="dashboard-number">
-              {resolvedRiskCount}
-            </p>
+          <article className="status-card">
+            <span className="status-dot risk-done"></span>
+
+            <div>
+              <span>Çözüldü</span>
+              <strong>{resolvedRiskCount}</strong>
+            </div>
           </article>
+
         </div>
       </section>
 
-      <section className="projects-section">
-        <div className="section-header">
+      {/* Proje Bazlı Özet */}
+      <section className="dashboard-section">
+
+        <div className="dashboard-section-title">
           <div>
             <h2>Proje Bazlı Özet</h2>
-            <p>Her projenin mevcut çalışma durumunu görüntüle</p>
+            <p>
+              Her projenin mevcut çalışma durumunu görüntüle
+            </p>
           </div>
         </div>
 
         {projects.length === 0 ? (
-          <div className="empty-state">
-            <div className="empty-icon">📁</div>
+
+          <div className="dashboard-empty">
+            <div>📁</div>
             <h3>Henüz proje yok</h3>
-            <p>Proje eklediğinizde burada özet bilgiler görünecek.</p>
+            <p>
+              Proje eklediğinizde burada özet bilgiler
+              görünecek.
+            </p>
           </div>
+
         ) : (
-          <div className="project-grid">
+
+          <div className="project-summary-grid">
+
             {projects.map((project) => {
-              const projectWorkItems = getProjectWorkItems(project.id);
-              const projectReports = getProjectReports(project.id);
-              const projectRisks = getProjectRisks(project.id);
 
-              const completedItems = projectWorkItems.filter(
-                (item) => item.status === "DONE"
-              ).length;
+              const projectWorkItems =
+                getProjectWorkItems(project.id);
 
-              const ongoingItems = projectWorkItems.filter(
-                (item) => item.status === "IN_PROGRESS"
-              ).length;
+              const projectReports =
+                getProjectReports(project.id);
 
-              const openRisks = projectRisks.filter(
-                (risk) => risk.status === "Açık"
-              ).length;
+              const projectRisks =
+                getProjectRisks(project.id);
+
+              const completedItems =
+                projectWorkItems.filter(
+                  (item) => item.status === "DONE"
+                ).length;
+
+              const ongoingItems =
+                projectWorkItems.filter(
+                  (item) => item.status === "IN_PROGRESS"
+                ).length;
+
+              const openRisks =
+                projectRisks.filter(
+                  (risk) => risk.status === "Açık"
+                ).length;
 
               return (
                 <article
-                  className="project-card"
+                  className="project-summary-card"
                   key={project.id}
                 >
-                  <div className="project-card-top">
-                    <span className="project-number">
+
+                  <div className="project-summary-header">
+                    <span>
                       #{project.id}
+                    </span>
+
+                    <span className="project-active">
+                      Aktif
                     </span>
                   </div>
 
                   <h3>{project.name}</h3>
 
-                  <p>
+                  <p className="project-description">
                     {project.description ||
                       "Bu proje için açıklama eklenmemiş."}
                   </p>
 
-                  <p>
-                    <strong>İşler:</strong>{" "}
-                    {projectWorkItems.length}
-                  </p>
+                  <div className="project-stats">
 
-                  <p>
-                    <strong>Tamamlanan işler:</strong>{" "}
-                    {completedItems}
-                  </p>
+                    <div>
+                      <span>İşler</span>
+                      <strong>
+                        {projectWorkItems.length}
+                      </strong>
+                    </div>
 
-                  <p>
-                    <strong>Devam eden işler:</strong>{" "}
-                    {ongoingItems}
-                  </p>
+                    <div>
+                      <span>Tamamlanan</span>
+                      <strong>
+                        {completedItems}
+                      </strong>
+                    </div>
 
-                  <p>
-                    <strong>Haftalık raporlar:</strong>{" "}
-                    {projectReports.length}
-                  </p>
+                    <div>
+                      <span>Devam Eden</span>
+                      <strong>
+                        {ongoingItems}
+                      </strong>
+                    </div>
 
-                  <p>
-                    <strong>Riskler:</strong>{" "}
-                    {projectRisks.length}
-                  </p>
+                    <div>
+                      <span>Raporlar</span>
+                      <strong>
+                        {projectReports.length}
+                      </strong>
+                    </div>
 
-                  <p>
-                    <strong>Açık riskler:</strong>{" "}
-                    {openRisks}
-                  </p>
+                    <div>
+                      <span>Riskler</span>
+                      <strong>
+                        {projectRisks.length}
+                      </strong>
+                    </div>
+
+                    <div>
+                      <span>Açık Risk</span>
+                      <strong>
+                        {openRisks}
+                      </strong>
+                    </div>
+
+                  </div>
+
                 </article>
               );
             })}
+
           </div>
         )}
+
       </section>
+
     </div>
   );
 }
