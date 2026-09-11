@@ -1021,3 +1021,326 @@ button:disabled {
     padding: 35px 20px;
   }
 }
+/* =========================
+   DASHBOARD GELİŞTİRİLMİŞ TASARIM
+   ========================= */
+
+.dashboard-page {
+  width: 100%;
+}
+
+.dashboard-header {
+  margin-bottom: 42px;
+}
+
+.dashboard-header h1 {
+  margin: 8px 0 10px;
+  font-size: 36px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.dashboard-header p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 15px;
+}
+
+/* Bölümler */
+
+.dashboard-section {
+  margin-bottom: 42px;
+}
+
+.dashboard-section-title {
+  margin-bottom: 20px;
+}
+
+.dashboard-section-title h2 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.dashboard-section-title p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* Genel Özet */
+
+.dashboard-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.summary-card {
+  min-height: 125px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 22px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  transition: all 0.2s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.summary-icon {
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eff6ff;
+  border-radius: 13px;
+  font-size: 22px;
+}
+
+.summary-card span {
+  display: block;
+  margin-bottom: 2px;
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.summary-card strong {
+  display: block;
+  margin: 2px 0;
+  color: #111827;
+  font-size: 30px;
+  line-height: 1.2;
+}
+
+.summary-card small {
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+/* İş ve Risk Durumları */
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.status-card {
+  min-height: 90px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+  transition: all 0.2s ease;
+}
+
+.status-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.07);
+}
+
+.status-dot {
+  width: 11px;
+  height: 11px;
+  min-width: 11px;
+  border-radius: 50%;
+}
+
+.status-card span:not(.status-dot) {
+  display: block;
+  margin-bottom: 3px;
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.status-card strong {
+  display: block;
+  color: #111827;
+  font-size: 25px;
+  line-height: 1.2;
+}
+
+/* İş durum renkleri */
+
+.status-dot.todo {
+  background: #f59e0b;
+}
+
+.status-dot.progress {
+  background: #2563eb;
+}
+
+.status-dot.done {
+  background: #16a34a;
+}
+
+.status-dot.blocked,
+.status-dot.risk-open {
+  background: #dc2626;
+}
+
+.status-dot.risk-progress {
+  background: #f59e0b;
+}
+
+.status-dot.risk-done {
+  background: #16a34a;
+}
+
+/* Proje Bazlı Özet */
+
+.project-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.project-summary-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  transition: all 0.2s ease;
+}
+
+.project-summary-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.project-summary-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.project-summary-header > span:first-child {
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.project-active {
+  padding: 6px 11px;
+  border-radius: 20px;
+  background: #ecfdf5;
+  color: #15803d;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.project-summary-card h3 {
+  margin: 16px 0 8px;
+  color: #111827;
+  font-size: 20px;
+}
+
+.project-description {
+  color: #6b7280;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.project-stats {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid #e5e7eb;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.project-stats span {
+  display: block;
+  margin-bottom: 4px;
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.project-stats strong {
+  display: block;
+  color: #111827;
+  font-size: 18px;
+}
+
+/* Dashboard hata */
+
+.dashboard-error {
+  margin-bottom: 25px;
+  padding: 14px 18px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  color: #b91c1c;
+}
+
+/* Dashboard boş durum */
+
+.dashboard-empty {
+  background: #ffffff;
+  border: 1px dashed #d1d5db;
+  border-radius: 16px;
+  padding: 55px 30px;
+  text-align: center;
+}
+
+.dashboard-empty > div {
+  margin-bottom: 10px;
+  font-size: 40px;
+}
+
+.dashboard-empty h3 {
+  margin: 0 0 6px;
+  color: #111827;
+}
+
+.dashboard-empty p {
+  margin: 0;
+  color: #6b7280;
+}
+
+/* Dashboard mobil */
+
+@media (max-width: 1000px) {
+  .dashboard-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .status-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .dashboard-summary-grid,
+  .status-grid,
+  .project-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-header h1 {
+    font-size: 30px;
+  }
+
+  .project-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
