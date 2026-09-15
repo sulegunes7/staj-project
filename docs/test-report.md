@@ -356,3 +356,54 @@ Day 16 hata düzeltme ve tekrar test çalışmaları sonucunda backend validatio
 Yapılan tekrar testlerinde mevcut CRUD ve frontend-backend entegrasyon akışlarının çalışmaya devam ettiği gözlemlenmiştir.
 
 Durum: PASS
+## 15. Day 17 API Regression ve Kritik Ekran Testleri
+
+Day 17 kapsamında backend API'leri ve frontend uygulamasının kritik kullanıcı akışları tekrar test edilmiştir. Amaç, Day 16 kapsamında yapılan validation düzenlemelerinin mevcut çalışan fonksiyonları etkilemediğini doğrulamaktır.
+
+### 15.1 Backend API Regression Testleri
+
+Aşağıdaki temel API endpointleri tekrar test edilmiştir:
+
+| Test | Sonuç |
+|---|---|
+| GET /api/health | PASS |
+| GET /api/projects | PASS |
+| GET /api/weekly-reports | PASS |
+| GET /api/work-items | PASS |
+| GET /api/risks | PASS |
+
+Backend API'lerinin çalışmaya devam ettiği ve mevcut verilerin başarılı şekilde alınabildiği doğrulanmıştır.
+
+### 15.2 Frontend CRUD Regression Testleri
+
+Frontend üzerinde kritik CRUD akışları tekrar test edilmiştir.
+
+| Ekran | Test | Sonuç |
+|---|---|---|
+| Projects | Güncelleme | PASS |
+| Weekly Reports | CRUD işlemleri | PASS |
+| Work Items | CRUD işlemleri | PASS |
+| Risks | CRUD işlemleri | PASS |
+
+### 15.3 Dashboard Regression Testi
+
+Dashboard ekranı tekrar kontrol edilmiştir.
+
+Kontrol edilen bilgiler:
+
+- Proje bilgileri
+- Haftalık rapor bilgileri
+- Work item bilgileri
+- Risk bilgileri
+
+Sayfa yenilendikten sonra verilerin doğru şekilde görüntülenmeye devam ettiği doğrulanmıştır.
+
+Durum: PASS
+
+### 15.4 Genel Day 17 Sonucu
+
+Day 17 API regression ve kritik frontend ekran testleri sonucunda backend API'lerinin, frontend CRUD işlemlerinin ve Dashboard ekranının çalışmaya devam ettiği doğrulanmıştır.
+
+Day 16 kapsamında yapılan validation değişikliklerinin mevcut temel fonksiyonları bozmadığı gözlemlenmiştir.
+
+Durum: PASS

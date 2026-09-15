@@ -173,4 +173,38 @@ Durum: PASS
 
 **Not:** Burada yeni bir `Maven Build` sonucu uydurmadık; zaten dosyada mevcut olan build kanıtını koruyoruz. Day 16'da gerçekten yaptığımız testleri ekliyoruz.
 
-Bunu ekledikten sonra **“ekledim”** de. Sonra artık dokümantasyonun kod değişiklikleriyle birlikte Git'e kaydedilmesi kısmına geçeceğiz.
+## 12. Day 17 API Regression ve Frontend Test Evidence
+
+Day 17 kapsamında backend API'leri ve frontend uygulamasının kritik ekranları tekrar test edilmiştir.
+
+### 12.1 Backend Regression
+
+Aşağıdaki endpointler tekrar çalıştırılmıştır:
+
+- `GET /api/health` → PASS
+- `GET /api/projects` → PASS
+- `GET /api/weekly-reports` → PASS
+- `GET /api/work-items` → PASS
+- `GET /api/risks` → PASS
+
+Backend API'lerinin çalışmaya devam ettiği ve mevcut verilerin başarılı şekilde alınabildiği doğrulanmıştır.
+
+### 12.2 Frontend Regression
+
+Frontend üzerinde aşağıdaki kritik ekranlar tekrar test edilmiştir:
+
+- Projects CRUD → PASS
+- Weekly Reports CRUD → PASS
+- Work Items CRUD → PASS
+- Risks CRUD → PASS
+- Dashboard → PASS
+
+Sayfa yenilemeleri sonrasında verilerin doğru şekilde görüntülendiği ve frontend-backend iletişiminin çalışmaya devam ettiği doğrulanmıştır.
+
+### 12.3 Genel Sonuç
+
+Day 17 regression testleri sonucunda backend API'lerinin, frontend CRUD işlemlerinin ve Dashboard ekranının çalışmaya devam ettiği doğrulanmıştır.
+
+Day 16 kapsamında yapılan validation değişikliklerinin mevcut temel fonksiyonları bozmadığı gözlemlenmiştir.
+
+**Durum: PASS**
