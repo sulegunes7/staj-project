@@ -2,6 +2,7 @@ package com.stajproject.controller;
 
 import com.stajproject.model.WeeklyReport;
 import com.stajproject.service.WeeklyReportService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,15 +29,29 @@ public class WeeklyReportController {
     }
 
     @PostMapping
-    public WeeklyReport createReport(@RequestBody WeeklyReport report) {
-        return weeklyReportService.createReport(report);
+    public ResponseEntity<WeeklyReport> createReport(@RequestBody WeeklyReport report) {
+
+        if (report.getProjectId() == null ||
+            report.getWeek() == null ||
+            report.getWeek().trim().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok(weeklyReportService.createReport(report));
     }
 
     @PutMapping("/{id}")
-    public WeeklyReport updateReport(
+    public ResponseEntity<WeeklyReport> updateReport(
             @PathVariable Integer id,
             @RequestBody WeeklyReport report) {
-        return weeklyReportService.updateReport(id, report);
+
+        if (report.getProjectId() == null ||
+            report.getWeek() == null ||
+            report.getWeek().trim().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok(weeklyReportService.updateReport(id, report));
     }
 
     @DeleteMapping("/{id}")

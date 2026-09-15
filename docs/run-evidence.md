@@ -129,4 +129,48 @@ Frontend ile backend arasındaki REST API iletişimi başarılı şekilde kurulm
 Backend projesinin Maven build sürecinden başarıyla geçtiği ve mevcut otomatik testlerin başarılı olduğu doğrulanmıştır.
 
 Projenin mevcut MVP kapsamı çalışır durumdadır.
+## 11. Day 16 Tekrar Çalıştırma ve Regression Evidence
 
+Day 16 kapsamında backend ve frontend uygulamaları tekrar çalıştırılarak kritik fonksiyonların çalışırlığı kontrol edilmiştir.
+
+### 11.1 Backend
+
+Spring Boot backend uygulaması 8080 portunda başarılı şekilde çalıştırılmıştır.
+
+Health endpoint kontrolü:
+
+```text
+GET /api/health
+
+Response:
+Backend is running
+Temel API endpointleri tekrar kontrol edilmiştir:
+GET /api/projects        → PASS
+GET /api/weekly-reports  → PASS
+GET /api/work-items      → PASS
+GET /api/risks           → PASS
+Validation kontrollerinde eksik zorunlu alanlarla gönderilen POST ve PUT isteklerinin 400 Bad Request döndürdüğü doğrulanmıştır.
+
+11.2 Frontend
+
+Frontend uygulaması tarayıcı üzerinden tekrar kontrol edilmiştir.
+
+Kontrol edilen ekranlar:
+
+Projects
+Weekly Reports
+Work Items
+Risks
+Dashboard
+
+Form validation, listeleme, sayfa yenileme, filtreleme ve Dashboard veri gösterimi kontrol edilmiş ve kritik akışların çalıştığı doğrulanmıştır.
+
+11.3 Genel Regression Sonucu
+
+Day 16 tekrar çalıştırma ve regression kontrolleri sonucunda frontend, backend ve PostgreSQL arasındaki temel çalışma akışlarının devam ettiği doğrulanmıştır.
+
+Durum: PASS
+
+**Not:** Burada yeni bir `Maven Build` sonucu uydurmadık; zaten dosyada mevcut olan build kanıtını koruyoruz. Day 16'da gerçekten yaptığımız testleri ekliyoruz.
+
+Bunu ekledikten sonra **“ekledim”** de. Sonra artık dokümantasyonun kod değişiklikleriyle birlikte Git'e kaydedilmesi kısmına geçeceğiz.

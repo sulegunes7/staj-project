@@ -2,6 +2,7 @@ package com.stajproject.controller;
 
 import com.stajproject.model.Risk;
 import com.stajproject.service.RiskService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,15 +36,33 @@ public class RiskController {
     }
 
     @PostMapping
-    public Risk createRisk(@RequestBody Risk risk) {
-        return riskService.createRisk(risk);
+    public ResponseEntity<Risk> createRisk(@RequestBody Risk risk) {
+
+        if (risk.getProjectId() == null ||
+            risk.getTitle() == null ||
+            risk.getTitle().trim().isEmpty() ||
+            risk.getStatus() == null ||
+            risk.getStatus().trim().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok(riskService.createRisk(risk));
     }
 
     @PutMapping("/{id}")
-    public Risk updateRisk(
+    public ResponseEntity<Risk> updateRisk(
             @PathVariable Integer id,
             @RequestBody Risk risk) {
-        return riskService.updateRisk(id, risk);
+
+        if (risk.getProjectId() == null ||
+            risk.getTitle() == null ||
+            risk.getTitle().trim().isEmpty() ||
+            risk.getStatus() == null ||
+            risk.getStatus().trim().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok(riskService.updateRisk(id, risk));
     }
 
     @DeleteMapping("/{id}")

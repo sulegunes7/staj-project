@@ -2,6 +2,8 @@ package com.stajproject.controller;
 
 import com.stajproject.model.Project;
 import com.stajproject.service.ProjectService;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,16 +30,25 @@ public class ProjectController {
     }
 
     @PostMapping
-    public Project createProject(@RequestBody Project project) {
-        return projectService.createProject(project);
+public ResponseEntity<Project> createProject(@RequestBody Project project) {
+
+    if (project.getName() == null || project.getName().trim().isEmpty()) {
+        return ResponseEntity.badRequest().build();
     }
 
-    @PutMapping("/{id}")
-    public Project updateProject(
-            @PathVariable Integer id,
-            @RequestBody Project project) {
-        return projectService.updateProject(id, project);
+    return ResponseEntity.ok(projectService.createProject(project));
+}
+@PutMapping("/{id}")
+public ResponseEntity<Project> updateProject(
+        @PathVariable Integer id,
+        @RequestBody Project project) {
+
+    if (project.getName() == null || project.getName().trim().isEmpty()) {
+        return ResponseEntity.badRequest().build();
     }
+
+    return ResponseEntity.ok(projectService.updateProject(id, project));
+}
 
     @DeleteMapping("/{id}")
     public void deleteProject(@PathVariable Integer id) {

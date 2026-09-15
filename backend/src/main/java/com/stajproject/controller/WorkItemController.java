@@ -2,6 +2,7 @@ package com.stajproject.controller;
 
 import com.stajproject.model.WorkItem;
 import com.stajproject.service.WorkItemService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,15 +36,33 @@ public class WorkItemController {
     }
 
     @PostMapping
-    public WorkItem createWorkItem(@RequestBody WorkItem workItem) {
-        return workItemService.createWorkItem(workItem);
+    public ResponseEntity<WorkItem> createWorkItem(@RequestBody WorkItem workItem) {
+
+        if (workItem.getProjectId() == null ||
+            workItem.getTitle() == null ||
+            workItem.getTitle().trim().isEmpty() ||
+            workItem.getStatus() == null ||
+            workItem.getStatus().trim().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok(workItemService.createWorkItem(workItem));
     }
 
     @PutMapping("/{id}")
-    public WorkItem updateWorkItem(
+    public ResponseEntity<WorkItem> updateWorkItem(
             @PathVariable Integer id,
             @RequestBody WorkItem workItem) {
-        return workItemService.updateWorkItem(id, workItem);
+
+        if (workItem.getProjectId() == null ||
+            workItem.getTitle() == null ||
+            workItem.getTitle().trim().isEmpty() ||
+            workItem.getStatus() == null ||
+            workItem.getStatus().trim().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok(workItemService.updateWorkItem(id, workItem));
     }
 
     @DeleteMapping("/{id}")

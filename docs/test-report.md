@@ -287,4 +287,72 @@ Backend API'lerinin PostgreSQL veritabanı ile iletişim kurduğu, frontend uygu
 Ayrıca backend projesinin Maven build sürecinden başarıyla geçtiği ve mevcut otomatik testlerin başarılı olduğu doğrulanmıştır.
 
 Testler geliştirme süreci boyunca manuel olarak gerçekleştirilmiş ve başarılı sonuçlanan işlemler proje geliştirme sürecinin doğrulanmasında kullanılmıştır.
+## 14. Day 16 Hata Düzeltme ve Tekrar Test Sonuçları
 
+Day 16 kapsamında daha önce geliştirilen backend ve frontend fonksiyonları tekrar kontrol edilmiş, tespit edilen validation eksiklikleri giderilmiş ve ilgili senaryolar yeniden test edilmiştir.
+
+### 14.1 Backend Validation Testleri
+
+| Test | Beklenen Sonuç | Gerçek Sonuç | Durum |
+|---|---|---|---|
+| Project POST boş veri | 400 Bad Request | 400 Bad Request | PASS |
+| Project PUT geçersiz veri | 400 Bad Request | 400 Bad Request | PASS |
+| Weekly Report POST boş veri | 400 Bad Request | 400 Bad Request | PASS |
+| Weekly Report PUT geçersiz veri | 400 Bad Request | 400 Bad Request | PASS |
+| Work Item POST boş veri | 400 Bad Request | 400 Bad Request | PASS |
+| Work Item PUT boş veri | 400 Bad Request | 400 Bad Request | PASS |
+| Risk POST boş veri | 400 Bad Request | 400 Bad Request | PASS |
+| Risk PUT boş veri | 400 Bad Request | 400 Bad Request | PASS |
+
+Backend controller katmanında zorunlu alan kontrolleri eklenerek eksik veya geçersiz verilerin veritabanına gönderilmesi engellenmiştir.
+
+### 14.2 Backend Relation Testleri
+
+Aşağıdaki relation endpointleri tekrar test edilmiştir:
+
+- `GET /api/risks/project/{projectId}`
+- `GET /api/risks/work-item/{workItemId}`
+
+Project üzerinden risk listeleme endpointinin başarılı şekilde çalıştığı ve ilgili `projectId` değerine ait kayıtların döndürüldüğü doğrulanmıştır.
+
+Work item üzerinden risk listeleme endpointinin başarılı şekilde cevap verdiği ve ilgili kayıt bulunmadığında boş liste döndürdüğü doğrulanmıştır.
+
+Durum: PASS
+
+### 14.3 Backend Regression Testleri
+
+Temel API endpointleri tekrar test edilmiştir:
+
+- `GET /api/health` → PASS
+- `GET /api/projects` → PASS
+- `GET /api/weekly-reports` → PASS
+- `GET /api/work-items` → PASS
+- `GET /api/risks` → PASS
+
+Mevcut verilerin API üzerinden başarılı şekilde alınabildiği ve önceki geliştirmelerin validation değişikliklerinden etkilenmediği doğrulanmıştır.
+
+### 14.4 Frontend Tekrar Testleri
+
+Frontend tarafında kritik ekranlar tarayıcı üzerinden tekrar kontrol edilmiştir.
+
+Kontrol edilen senaryolar:
+
+- Projects formunda boş veri kontrolü → PASS
+- Projects formunda yalnızca boşluk girilmesi → PASS
+- Projects listeleme ve sayfa yenileme → PASS
+- Weekly Reports boş form kontrolü → PASS
+- Weekly Reports listeleme ve sayfa yenileme → PASS
+- Work Items boş form kontrolü → PASS
+- Work Items listeleme ve sayfa yenileme → PASS
+- Work Items filtreleme → PASS
+- Risks boş form kontrolü → PASS
+- Risks listeleme ve sayfa yenileme → PASS
+- Dashboard veri gösterimi → PASS
+
+### 14.5 Genel Sonuç
+
+Day 16 hata düzeltme ve tekrar test çalışmaları sonucunda backend validation kontrollerinin doğru şekilde çalıştığı, relation endpointlerinin beklenen cevapları verdiği ve frontend üzerindeki kritik kullanıcı akışlarının sorunsuz şekilde çalıştığı doğrulanmıştır.
+
+Yapılan tekrar testlerinde mevcut CRUD ve frontend-backend entegrasyon akışlarının çalışmaya devam ettiği gözlemlenmiştir.
+
+Durum: PASS
