@@ -317,3 +317,156 @@ Projenin temel full stack geliştirme süreci tamamlanmıştır.
 Frontend, backend ve PostgreSQL veritabanı birlikte çalışmaktadır.
 
 Temel CRUD işlemleri, proje takibi, haftalık rapor yönetimi, iş takibi, risk yönetimi ve dashboard özellikleri uygulanmış ve test edilmiştir.
+## Kurulum ve Çalıştırma Özeti
+
+### 1. PostgreSQL
+
+PostgreSQL servisinin çalıştığından emin olunmalıdır.
+
+Kullanılan veritabanı:
+
+- Host: `localhost`
+- Port: `5432`
+- Database: `staj_db`
+- Schema: `public`
+
+### 2. Backend
+
+Yeni bir terminal açılarak backend klasörüne geçilir:
+
+```powershell
+cd backend
+Spring Boot uygulaması Maven Wrapper kullanılarak çalıştırılır:
+.\mvnw.cmd spring-boot:run
+Backend varsayılan olarak aşağıdaki adreste çalışır:
+
+http://localhost:8080
+
+Backend bağlantısını kontrol etmek için:
+
+Invoke-RestMethod -Uri "http://localhost:8080/api/health" -Method Get
+
+Beklenen sonuç:
+
+Backend is running
+3. Frontend
+
+Yeni bir terminal açılarak frontend klasörüne geçilir:
+
+cd frontend
+
+Gerekli paketler yüklenir:
+
+npm install
+
+Frontend başlatılır:
+
+npm run dev
+
+Vite tarafından gösterilen localhost adresinden uygulamaya erişilebilir.
+
+4. Build ve Test
+
+Backend build ve test:
+
+cd backend
+.\mvnw.cmd clean install
+
+Beklenen test sonucu:
+
+Tests run: 1
+Failures: 0
+Errors: 0
+BUILD SUCCESS
+
+Frontend production build:
+
+cd frontend
+npm run build
+
+Production build işlemi başarıyla tamamlanmıştır.
+
+## Swagger / OpenAPI
+
+Backend çalışırken Swagger arayüzü üzerinden API endpointleri görüntülenebilir ve test edilebilir.
+
+Swagger UI:
+
+http://localhost:8080/swagger-ui/index.html
+
+Dokümante edilen API grupları:
+
+Projects
+Weekly Reports
+Work Items
+Risks
+##Ortam Değişkenleri
+
+Backend PostgreSQL bağlantısı için DB_PASSWORD ortam değişkenini kullanmaktadır.
+
+PowerShell üzerinden örnek kullanım:
+
+$env:DB_PASSWORD="your_password"
+
+Gerçek PostgreSQL parolası README veya GitHub üzerinde paylaşılmamalıdır.
+
+##Veritabanı Migration ve Seed
+
+Projede ayrı bir Flyway veya Liquibase migration sistemi bulunmamaktadır.
+
+Hibernate tarafından aşağıdaki yapılandırma kullanılmaktadır:
+
+spring.jpa.hibernate.ddl-auto=update
+
+Bu yapılandırma ile uygulama çalıştırıldığında entity yapısına göre veritabanı şeması güncellenmektedir.
+
+Projede ayrıca ayrı bir otomatik seed mekanizması bulunmamaktadır. Demo sırasında mevcut PostgreSQL verileri kullanılmaktadır.
+
+##Örnek Veri
+
+Demo sırasında kullanılabilecek mevcut örnek veriler:
+
+Proje: Staj Projesi Guncel 2
+Haftalık raporlar: 1. Hafta, 2. Hafta, 3. Hafta
+İş: Frontend geliştirmeleri
+Risk: API bağlantısında gecikme
+
+
+## Uçtan Uca Demo Senaryosu
+
+1. PostgreSQL servisi başlatılır.
+2. Backend Spring Boot ile 8080 portunda çalıştırılır.
+3. `/api/health` endpointi ile backend kontrol edilir.
+4. Frontend `npm run dev` komutu ile başlatılır.
+5. Tarayıcıdan frontend uygulaması açılır.
+6. Dashboard üzerinden proje, rapor, iş ve risk bilgileri kontrol edilir.
+7. Projects ekranında proje işlemleri gösterilir.
+8. Weekly Reports ekranında haftalık raporlar kontrol edilir.
+9. Work Items ekranında işler ve filtreleme kontrol edilir.
+10. Risks ekranında risk kayıtları kontrol edilir.
+11. Yapılan işlemlerin backend API ve PostgreSQL verileriyle uyumlu olduğu doğrulanır.
+
+## Bilinen Eksikler
+
+- Kullanıcı giriş/kimlik doğrulama ve yetkilendirme sistemi bulunmamaktadır.
+- Uygulama geliştirme ortamında localhost üzerinde çalışacak şekilde yapılandırılmıştır.
+- Otomatik test kapsamı temel seviyededir ve manuel regression testleri ile desteklenmiştir.
+- Production deployment ve gerçek sunucu yapılandırması proje kapsamında bulunmamaktadır.
+
+## Teknik Kararlar
+
+Projenin mimari ve teknik kararları `docs/technical-decision.md` dosyasında belgelenmiştir.
+
+## Test ve Teslim Dokümantasyonu
+
+Test sonuçları:
+
+- `docs/test-report.md`
+
+Çalıştırma ve deployment kanıtları:
+
+- `docs/run-evidence.md`
+
+Teknik kararlar:
+
+- `docs/technical-decision.md`
