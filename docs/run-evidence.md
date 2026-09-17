@@ -54,10 +54,9 @@ Frontend uygulaması React ve Vite kullanılarak geliştirilmiştir.
 Frontend klasöründe kullanılan komut:
 
 npm run dev
-
 Frontend uygulaması aşağıdaki adres üzerinden çalışmaktadır:
 
-http://localhost:5173
+http://localhost:5174
 
 Frontend uygulamasının başarılı şekilde açıldığı ve uygulama ekranlarının görüntülenebildiği doğrulanmıştır.
 
@@ -208,3 +207,35 @@ Day 17 regression testleri sonucunda backend API'lerinin, frontend CRUD işlemle
 Day 16 kapsamında yapılan validation değişikliklerinin mevcut temel fonksiyonları bozmadığı gözlemlenmiştir.
 
 **Durum: PASS**
+## T11 – Day 19: Local Demo Validation
+
+### Backend Validation
+- Backend was built successfully using Maven:
+  `.\mvnw.cmd clean install`
+- Maven test execution completed successfully with 0 failures and 0 errors.
+- Backend health endpoint was checked:
+  `GET /api/health`
+- Health check returned:
+  `Backend is running`
+
+### Frontend Validation
+- Production build was completed successfully using:
+  `npm run build`
+- Frontend development server was started successfully.
+- Frontend was served locally at:
+  `http://localhost:5174/`
+
+### End-to-End Smoke Test
+The following screens were opened and verified successfully:
+- Dashboard
+- Projects
+- Weekly Reports
+- Work Items
+- Risks
+
+The frontend successfully communicated with the backend and existing data was displayed on the related screens.
+
+### Result
+The full stack application was validated locally with the backend, PostgreSQL database and React frontend running together. The main application screens were successfully opened and verified as part of the Day 19 smoke test.
+
+> Note: No production deployment was performed. Day 19 was completed using a validated local demo environment.
