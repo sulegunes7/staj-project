@@ -188,3 +188,30 @@ Belirli bir work item kaydını siler.
 DELETE /api/work-items/2
 ```
 ```
+## Role-Based Authorization Matrix
+
+### Roles
+
+| Role | Description |
+|---|---|
+| USER | Work Item kayıtlarını görüntüleyebilir. |
+| ADMIN | USER yetkilerine ek olarak Work Item oluşturabilir, güncelleyebilir ve silebilir. |
+
+### Work Item Authorization
+
+| Method | Endpoint | USER | ADMIN |
+|---|---|---|---|
+| GET | `/api/work-items/**` | Allowed | Allowed |
+| POST | `/api/work-items/**` | Forbidden (403) | Allowed |
+| PUT | `/api/work-items/**` | Forbidden (403) | Allowed |
+| DELETE | `/api/work-items/**` | Forbidden (403) | Allowed |
+
+### Public Endpoints
+
+| Endpoint | Access |
+|---|---|
+| `OPTIONS /**` | Public |
+| `/swagger-ui/**` | Public |
+| `/v3/api-docs/**` | Public |
+
+All other endpoints require authentication.

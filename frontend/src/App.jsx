@@ -4,10 +4,29 @@ import WeeklyReports from "./pages/WeeklyReports";
 import WorkItems from "./pages/WorkItems";
 import Risks from "./pages/Risks";
 import Dashboard from "./pages/Dashboard";
+import Login from "./pages/Login";
+import { clearAuth } from "./services/api";
 import "./App.css";
 
 function App() {
   const [page, setPage] = useState("dashboard");
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    !!sessionStorage.getItem("authToken")
+  );
+
+  // Kullanıcı giriş yapmamışsa Login ekranını göster
+  if (!isLoggedIn) {
+    return (
+      <Login />
+    );
+  }
+
+  // Çıkış yap
+  const handleLogout = () => {
+    clearAuth();
+    setIsLoggedIn(false);
+    setPage("dashboard");
+  };
 
   return (
     <div className="app">
@@ -49,6 +68,10 @@ function App() {
               onClick={() => setPage("risks")}
             >
               Riskler
+            </button>
+
+            <button onClick={handleLogout}>
+              Çıkış Yap
             </button>
           </div>
         </div>
