@@ -1,6 +1,7 @@
 package com.stajproject.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "work_items")
@@ -26,7 +27,7 @@ public class WorkItem {
     @Column(nullable = false)
     private String status;
 
-    private String dueDate;
+    private LocalDate dueDate;
 
     public WorkItem() {
     }
@@ -38,7 +39,7 @@ public class WorkItem {
             String description,
             String responsible,
             String status,
-            String dueDate) {
+            LocalDate dueDate) {
 
         this.projectId = projectId;
         this.reportId = reportId;
@@ -105,11 +106,11 @@ public class WorkItem {
         this.status = status;
     }
 
-    public String getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(String dueDate) {
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 }
