@@ -10,6 +10,8 @@ import "./App.css";
 
 function App() {
   const [page, setPage] = useState("dashboard");
+
+  // Session'da authToken varsa kullanıcı giriş yapmış kabul edilir
   const [isLoggedIn, setIsLoggedIn] = useState(
     !!sessionStorage.getItem("authToken")
   );

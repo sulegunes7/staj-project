@@ -36,6 +36,7 @@ function Login() {
       window.location.href = "/dashboard";
     } catch (error) {
       sessionStorage.removeItem("authToken");
+      sessionStorage.removeItem("userRole");
       setError(error.message);
     } finally {
       setLoading(false);
