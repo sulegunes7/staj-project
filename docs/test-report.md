@@ -18,7 +18,7 @@ Testler geliştirme süreci içerisinde manuel API testleri, frontend üzerinden
 | Frontend | React + Vite |
 | Veritabanı | PostgreSQL 17.11 |
 | Backend Portu | 8080 |
-| Frontend Portu | 5173 |
+| Frontend Portu | 5175 |
 | Database | staj_db |
 
 ---
@@ -405,5 +405,88 @@ Durum: PASS
 Day 17 API regression ve kritik frontend ekran testleri sonucunda backend API'lerinin, frontend CRUD işlemlerinin ve Dashboard ekranının çalışmaya devam ettiği doğrulanmıştır.
 
 Day 16 kapsamında yapılan validation değişikliklerinin mevcut temel fonksiyonları bozmadığı gözlemlenmiştir.
+
+Durum: PASS
+### 16.1 Backend Authentication Testleri
+
+Authentication ve yetkilendirme mekanizmasının doğru çalıştığını doğrulamak amacıyla farklı kullanıcı durumları test edilmiştir.
+
+| Test | Beklenen Sonuç | Gerçek Sonuç | Durum |
+|---|---|---|---|
+| Kimliksiz GET /api/work-items | 401 Unauthorized | 401 Unauthorized | PASS |
+| USER GET /api/work-items | 200 OK | 200 OK | PASS |
+| USER POST /api/work-items | 403 Forbidden | 403 Forbidden | PASS |
+| ADMIN GET /api/work-items | 200 OK | 200 OK | PASS |
+| ADMIN POST /api/work-items | 200 OK | 200 OK | PASS |
+| ADMIN DELETE /api/work-items/{id} | 200 OK | 200 OK | PASS |
+
+Backend tarafında kimlik doğrulama ve rol bazlı yetkilendirme kontrollerinin çalıştığı doğrulanmıştır.
+
+### 16.2 Frontend Role-Based Authorization Testleri
+
+Frontend tarafında kullanıcı rollerine göre ekran ve aksiyon görünürlükleri tarayıcı üzerinden test edilmiştir.
+
+| Kullanıcı Rolü | Work Items Listeleme | Yeni İş Formu | Düzenleme | Silme | Durum |
+|---|---|---|---|---|---|
+| USER | Görünüyor | Gizli | Gizli | Gizli | PASS |
+| ADMIN | Görünüyor | Görünüyor | Görünüyor | Görünüyor | PASS |
+
+USER rolü ile giriş yapıldığında Work Items listesi ve filtreler görüntülenmiş, ancak yeni kayıt oluşturma, düzenleme ve silme aksiyonları gösterilmemiştir.
+
+ADMIN rolü ile giriş yapıldığında yeni kayıt oluşturma, düzenleme ve silme aksiyonlarının görüntülendiği doğrulanmıştır.
+
+### 16.3 Session Guard Testi
+
+Frontend oturum kontrolü tarayıcı üzerinden test edilmiştir.
+
+Test senaryosunda authentication bilgileri sessionStorage üzerinden kaldırılmış ve sayfa yenilenmiştir.
+
+Beklenen sonuç:
+Kullanıcının giriş ekranına yönlendirilmesi.
+
+Gerçek sonuç:
+Login ekranı görüntülenmiştir.
+
+Durum: PASS
+
+### 16.4 Backend Automated Test
+
+Backend Maven Wrapper kullanılarak tekrar test edilmiştir.
+
+Kullanılan komut:
+
+.\mvnw.cmd test
+
+Test sonucu:
+
+Tests run: 1
+Failures: 0
+Errors: 0
+Skipped: 0
+BUILD SUCCESS
+
+Durum: PASS
+
+### 16.5 Frontend Production Build Testi
+
+Frontend production build işlemi test edilmiştir.
+
+Kullanılan komut:
+
+npm run build
+
+Build sonucunda Vite production çıktısı başarıyla oluşturulmuştur.
+
+Durum: PASS
+
+### 16.6 Day 24-29 Genel Sonucu
+
+Day 24-29 kapsamında authentication, role-based authorization, frontend erişim kuralları ve build süreçleri test edilmiştir.
+
+Backend tarafında kimliksiz kullanıcıların korumalı endpointlere erişemediği, USER rolünün yalnızca izin verilen işlemleri gerçekleştirebildiği ve ADMIN rolünün Work Item oluşturma, güncelleme ve silme işlemlerini gerçekleştirebildiği doğrulanmıştır.
+
+Frontend tarafında kullanıcı rollerine göre aksiyonların görünürlüğünün doğru şekilde değiştiği ve geçersiz oturum durumunda Login ekranının gösterildiği doğrulanmıştır.
+
+Backend automated testleri ve frontend production build işlemi başarıyla tamamlanmıştır.
 
 Durum: PASS

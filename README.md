@@ -253,6 +253,44 @@ React frontend uygulaması, backend tarafından sağlanan REST API endpointleri 
 Frontend tarafında API istekleri merkezi bir servis yapısı üzerinden yönetilmektedir.
 
 Frontend ve backend farklı portlarda çalıştığı için gerekli CORS yapılandırması backend tarafında yapılmıştır.
+## Authentication ve Authorization
+
+Uygulamada kullanıcı kimlik doğrulama ve rol tabanlı yetkilendirme için Spring Security kullanılmaktadır.
+
+### Kullanıcı Rolleri
+
+| Rol | Yetkiler |
+|---|---|
+| USER | Work Item kayıtlarını görüntüleyebilir. |
+| ADMIN | Work Item görüntüleyebilir, oluşturabilir, güncelleyebilir ve silebilir. |
+
+### Authentication
+
+Backend tarafında HTTP Basic Authentication kullanılmaktadır.
+
+Geliştirme ortamında aşağıdaki kullanıcılar tanımlanmıştır:
+
+| Kullanıcı | Şifre | Rol |
+|---|---|---|
+| user | user123 | USER |
+| admin | admin123 | ADMIN |
+
+Frontend tarafında oturum bilgisi sessionStorage üzerinden tutulmaktadır.
+
+### Authorization
+
+Work Item endpointlerinde rol bazlı erişim kontrolü uygulanmaktadır.
+
+| Method | USER | ADMIN |
+|---|---|---|
+| GET | İzinli | İzinli |
+| POST | 403 Forbidden | İzinli |
+| PUT | 403 Forbidden | İzinli |
+| DELETE | 403 Forbidden | İzinli |
+
+Kimlik doğrulama yapılmadan korumalı endpointlere erişildiğinde `401 Unauthorized`, yetkisiz bir rol ile erişildiğinde `403 Forbidden` response'u döndürülmektedir.
+
+Frontend tarafında da kullanıcı rolüne göre oluşturma, güncelleme ve silme aksiyonlarının görünürlüğü kontrol edilmektedir.
 
 ## Test
 
@@ -370,7 +408,7 @@ Vite tarafından gösterilen localhost adresinden uygulamaya erişilebilir.
 Backend build ve test:
 
 cd backend
-.\mvnw.cmd clean install
+.\mvnw.cmd test
 
 Beklenen test sonucu:
 
@@ -439,16 +477,16 @@ Risk: API bağlantısında gecikme
 3. `/api/health` endpointi ile backend kontrol edilir.
 4. Frontend `npm run dev` komutu ile başlatılır.
 5. Tarayıcıdan frontend uygulaması açılır.
-6. Dashboard üzerinden proje, rapor, iş ve risk bilgileri kontrol edilir.
-7. Projects ekranında proje işlemleri gösterilir.
-8. Weekly Reports ekranında haftalık raporlar kontrol edilir.
-9. Work Items ekranında işler ve filtreleme kontrol edilir.
-10. Risks ekranında risk kayıtları kontrol edilir.
-11. Yapılan işlemlerin backend API ve PostgreSQL verileriyle uyumlu olduğu doğrulanır.
+6. Login ekranından USER veya ADMIN hesabı ile giriş yapılır.
+7. Dashboard üzerinden proje, rapor, iş ve risk bilgileri kontrol edilir.
+8. Projects ekranında proje işlemleri gösterilir.
+9. Weekly Reports ekranında haftalık raporlar kontrol edilir.
+10. Work Items ekranında işler ve filtreleme kontrol edilir.
+11. Risks ekranında risk kayıtları kontrol edilir.
+12. Yapılan işlemlerin backend API ve PostgreSQL verileriyle uyumlu olduğu doğrulanır.
 
 ## Bilinen Eksikler
 
-- Kullanıcı giriş/kimlik doğrulama ve yetkilendirme sistemi bulunmamaktadır.
 - Uygulama geliştirme ortamında localhost üzerinde çalışacak şekilde yapılandırılmıştır.
 - Otomatik test kapsamı temel seviyededir ve manuel regression testleri ile desteklenmiştir.
 - Production deployment ve gerçek sunucu yapılandırması proje kapsamında bulunmamaktadır.

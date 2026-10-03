@@ -59,21 +59,16 @@ Development server çalıştırılmıştır.
 Frontend production build işlemi gerçekleştirilmiştir.
 npm run dev ile geliştirme ortamı başlatılmıştır.
 npm run build ile production çıktısı oluşturulmuştur.
-4. Routing Kararı
-
-Frontend içerisinde farklı işlevler için ayrı ekranlar oluşturulmuştur.
-
-Mevcut temel ekranlar:
-
-Dashboard
-Projects
-Weekly Reports
-Work Items
-Risks
-
+4. Bölüm 4 – Routing
+Şu kısmı:
 Projenin mevcut sürümünde authentication ve role-based protected route sistemi bulunmamaktadır.
 
-Bu nedenle /login, /admin/users veya protected route gibi yapılar mevcut uygulamanın aktif özellikleri olarak değerlendirilmemektedir.
+şununla değiştir:
+Projenin mevcut sürümünde authentication ve role-based authorization kontrolleri bulunmaktadır.
+
+Frontend tarafında oturum bilgisi sessionStorage üzerinden tutulmakta ve oturum bulunmadığında Login ekranı gösterilmektedir.
+
+Backend tarafında Spring Security kullanılarak USER ve ADMIN rolleri tanımlanmıştır. Work Item endpointleri için rol bazlı erişim kontrolleri uygulanmıştır.
 
 5. State Management Kararı
 
@@ -185,7 +180,6 @@ WeeklyReport
 WorkItem
 Risk
 
-Projenin mevcut sürümünde kullanıcı ve rol tabanlı authentication sistemi bulunmamaktadır.
 
 9.1 JPA / Hibernate
 
@@ -360,17 +354,31 @@ Backend tarafında Maven testleri ve manuel API testleri gerçekleştirilmiştir
 
 Backend build/test komutu:
 
-.\mvnw.cmd clean install
+.\mvnw.cmd test
 
 Frontend production build komutu:
-
 npm run build
 
 Ayrıca Swagger ve REST API endpointleri üzerinden manuel testler gerçekleştirilmiştir.
+Frontend tarafında kritik CRUD senaryoları, Dashboard ekranı ve role-based UI senaryoları tekrar test edilmiştir.
+Authentication ve authorization kapsamında 401/403 API davranışları ile USER/ADMIN ekran görünürlükleri test edilmiştir.
+Test sonuçları:
+- docs/test-report.md
+- docs/run-evidence.md
+dosyalarında belgelenmiştir.
 
-Frontend tarafında kritik CRUD senaryoları ve Dashboard ekranı tekrar test edilmiştir.
+### Sonuç
 
-Day 16 kapsamında validation ve hata düzeltme testleri gerçekleştirilmiş, Day 17 kapsamında regression testleri uygulanmıştır.
+Bunları yaptığımızda `technical-decision.md` artık **projenin gerçek son hâlini** anlatacak:
+
+**React + Vite → REST API → Spring Boot + Spring Security → JPA/Hibernate → PostgreSQL**
+
+ve ayrıca:
+
+**USER → görüntüleme**  
+**ADMIN → görüntüleme + oluşturma + güncelleme + silme**
+
+şeklindeki yetkilendirme de dokümante edilmiş olacak.
 
 Test sonuçları:
 
@@ -425,14 +433,15 @@ Test ve regression dokümantasyonu
 
 Mevcut sürümde bulunmayan veya geliştirme kapsamına alınmayan konular:
 
-Authentication
-Authorization / role-based access control
 Production deployment
 Otomatik database migration sistemi
 Otomatik seed sistemi
 Gelişmiş kullanıcı yönetimi
+Database tabanlı kullanıcı ve rol yönetimi
 
-Bu konular projenin mevcut staj kapsamının dışında bırakılmış veya sonraki geliştirme aşamalarına bırakılmıştır.
+Production deployment, otomatik database migration, otomatik seed ve gelişmiş kullanıcı yönetimi gibi konular sonraki geliştirme aşamalarına bırakılmıştır.
+
+Authentication ve role-based authorization ise mevcut sürümde uygulanmış ve test edilmiştir.
 
 21. Teknik Kararların Özeti
 Alan	Karar
@@ -449,8 +458,8 @@ Repository	Tek Git repository
 Frontend / Backend yapısı	Ayrı klasörler
 UI yaklaşımı	Component tabanlı
 Validation	Backend + Frontend
-Authentication	Mevcut sürümde yok
-Authorization	Mevcut sürümde yok
+Authentication    Spring Security + HTTP Basic
+Authorization     USER / ADMIN role-based access
 Database migration	Ayrı migration aracı yok
 Seed	Otomatik seed mekanizması yok
 22. Sonuç
